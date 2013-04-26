@@ -1,0 +1,22 @@
+	 <table>
+	<tr>
+		<th>employee</th>
+		<th>project</th>
+		<th>module</th>
+		<th>date</th>
+		<th>Hours</th>
+		<th>Comments</th>
+		
+	</tr>
+	{% for records in timesheets %}
+		<tr>
+			<td>{{ records.firstname }}</td>
+			<td>{{ records.project }}</td>
+			<td>{{ records.module }}</td>
+			<td>{{ records.date }}</td>
+			<td>{{ records.hours }}</td>
+			<td>{{ records.comments }}</td>
+			    
+	  </tr>
+	{% endfor %}
+ 	</table>

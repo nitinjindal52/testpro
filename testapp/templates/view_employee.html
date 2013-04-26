@@ -1,0 +1,77 @@
+{% extends 'admin_home.html' %}
+{% block ss %}
+<title>Progazer | View Employee </title>
+<script type="text/javascript">
+        function view_chart() {
+        
+        				var select = document.getElementById('sort_by').value;
+        				window.location = "/progazer/view_employee_sorted/"+select+"/";
+        				
+        }
+</script>
+<body style="margin:0; padding:0; font-family:arial;">
+<div class="admin-left-sidebar">
+        	<ul>
+			<li ><a href="/progazer/login/">Dashboard</a></li>            
+            <li  ><a href="/progazer/employee/"> Add Employee </a></li>
+            <li class="dashboard-active"><a href="/progazer/view_employee/"> View Employee </a></li>
+            <li><a href="/progazer/leave_application/">Add Leave</a></li>
+			<li><a href="/progazer/leave_register_hr/">Leave Register</a></li>
+			<li><a href="/progazer/optional_holiday/">Optional Holidays</a></li>
+			<li><a href="/progazer/attendence/">Upload Attendence</a></li>
+			<li><a href="/progazer/view_attendence_emp/">Employee Attendence</a></li>
+			<li><a href="/progazer/view_attendence_date/">Date Attendence </a></li>
+			<li><a href="/progazer/manage_hr/">HR Group </a></li>
+			<li><a href="/progazer/manage_att_uploader/">Attendence Uploader Group</a></li>
+			<li><a href="/progazer/employee_upload/">Employee Uploader </a></li>
+			
+			
+			</ul>
+			</div>
+			<div class="admin-right-sidebar">
+			
+		<div style="float:Left; width=300px" >
+			<label style="color: #grey;font-family: arial;font-size: 16px;line-height: 31px;padding: 0 5px;width: 100px;" >Sort By:</label>
+			 <select id="sort_by" class="emp-select" onchange="view_chart()"><option default>--{{sort_value}}--</option><option value="1">ID(ascending)</option><option value="2">ID(descending)</option><option value="3">Name(ascending)</option><option value="4">Name(descending)</option></select>
+		</div>
+		<div style="float:Left; margin: 20px 248px;">
+		<form method="post" action=".">{%csrf_token%}
+		<input type="submit" name="export" value="Export Data" />
+		</form>
+		</div>
+		
+		<div style="float:Right; width:200px" >
+			<label class="label-7"></label>
+		<form method="post" action=".">{%csrf_token%}
+			<input list="browsers" id="employee" class="emp-input-7" name="employee" value="Search" onblur="if (this.value == '') {this.value = 'Search';}" onfocus="if(this.value == 'Search') {this.value = ''}" >
+			<datalist id="browsers" >
+			{% for employee in employee_list %}
+	 			 <option value="{{employee.firstname}} {{employee.lastname}}" ></option>{% endfor %}
+			</datalist>
+			
+		</form>
+		</div>
+	<div class="table-grid">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Old Employee ID</th>
+                    <th scope="col">Designation</th>
+                    <th scope="col">Department</th>
+                  </tr>
+                  {% for employee in employee_list %}
+                  <tr onclick="document.location='/progazer/view_employeeid/{{ employee.id }}/';">
+                  <td>{{employee.id}}</td>
+                  <td>{{employee.firstname}} {{employee.lastname}}</td>
+                  <td>{{employee.old_employee_id}}</td>
+                  <td>{{employee.designation}}</td>
+                  <td>{{employee.department}}</td>
+                  
+                  </tr>
+                  {% endfor %}
+                  </table>
+    </div>
+</div>
+
+{% endblock %}

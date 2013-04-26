@@ -1,0 +1,80 @@
+{% extends "admin_home.html" %}
+{% block ss %}
+<title>Progazer | View Timesheets </title>
+<body style="margin:0; padding:0; font-family:arial;">
+<div class="admin-left-sidebar">
+        	<ul>
+            <li><a href="/progazer/login/">Dashboard</a></li>            
+            <li><a href="/progazer/addtimesheet/"> Add Timesheet </a></li>
+            <li><a href="/progazer/leave_application/">Add Leave</a></li>
+			<li  class="dashboard-active" ><a href="/progazer/viewtimesheet/"> View Timesheet </a></li>
+			{% if user_status == '1' %}
+			<li><a href="/progazer/assign_project/"> Assign Project  </a></li>
+			<li><a href="/progazer/re_assign_project/"> Re-assign Project  </a></li>
+			<li><a href="/progazer/addproject/"> Add Project </a></li>
+			<li><a href="/progazer/view_project/"> View Project </a></li>
+			<li><a href="/progazer/addclient/"> Add Client </a></li>
+			<li><a href="/progazer/view_client/"> View Client </a></li>
+			<li><a href="/admin/"> View Database </a></li>   
+			{% endif %}                             
+            </ul>
+</div>
+<div class="admin-right-sidebar">
+
+	<div class="table-heading-1"><h1>Submitted Records:</h1></div>
+	<div class="table-grid">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Project</th>
+                    <th scope="col">Activity</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Hours</th>
+                    <th scope="col">Comments</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                
+                 {% for records in record %}
+                 <form method="post" action=".">{%csrf_token%}
+                 <tr>
+                    <td>{{records.firstname.firstname}} {{records.firstname.lastname}}</td>
+                    <td>{{ records.project }}</td>
+                    <td>{{ records.module }}</td>
+                    <td>{{ records.date }}</td>
+                    <td>{{ records.hours }}</td>
+                    <td>{{ records.comments }}</td>
+                    <td><input type="hidden" name="record_id" value="{{records.id}}" /><input type="submit" style="background:url({{STATIC_URL}}/images/approve.jpg);cursor: pointer; margin:0 5px; width:16px; height:16px; " title="Approve" value="" name="approve"/><input type="submit" style="background:url({{STATIC_URL}}/images/discard.jpg); width:16px; cursor: pointer; height:16px; margin:0 5px; " value="" title="Discard" name="discard"/></td>
+                  </tr>
+                  </form>
+                 {% endfor %}
+                  </table>
+       </div>
+		<div class="table-heading-1"><h1>Approved Records:</h1></div>
+	<div class="table-grid">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Project</th>
+                    <th scope="col">Activity</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Hours</th>
+                    <th scope="col">Comments</th>
+                    
+                  </tr>
+                
+                 {% for records_a in record_a %}
+                 <tr>
+                    <td>{{records_a.firstname.firstname}} {{records_a.firstname.lastname}}</td>
+                    <td>{{ records_a.project }}</td>
+                    <td>{{ records_a.module }}</td>
+                    <td>{{ records_a.date }}</td>
+                    <td>{{ records_a.hours }}</td>
+                    <td>{{ records_a.comments }}</td>
+                  </tr>
+                 {% endfor %}
+                  </table>
+       </div>
+</div>
+</body>	
+
+{% endblock %}

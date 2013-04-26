@@ -1,0 +1,76 @@
+{% extends "admin_home.html" %}
+{% block ss %}
+<title>Progazer | Leave Register </title>
+
+<body style="margin:0; padding:0; font-family:arial;">
+<div class="admin-left-sidebar">
+        	<ul>
+			<li ><a href="/progazer/login/">Dashboard</a></li>            
+            <li  ><a href="/progazer/employee/"> Add Employee </a></li>
+            <li><a href="/progazer/view_employee/"> View Employee </a></li>
+            <li><a href="/progazer/leave_application/">Add Leave</a></li>
+			<li  class="dashboard-active"><a href="/progazer/leave_register_hr/">Leave Register</a></li>
+			<li><a href="/progazer/optional_holiday/">Optional Holidays</a></li>
+			<li><a href="/progazer/attendence/">Upload Attendence</a></li>
+			<li><a href="/progazer/view_attendence_emp/">Employee Attendence</a></li>
+			<li><a href="/progazer/view_attendence_date/">Date Attendence </a></li>
+			<li><a href="/progazer/manage_hr/">HR Group </a></li>
+			<li><a href="/progazer/manage_att_uploader/">Attendence Uploader Group</a></li>
+			<li><a href="/progazer/employee_upload/">Employee Uploader </a></li>
+			
+			
+			</ul>
+			</div>
+			<div class="admin-right-sidebar">
+
+	
+	<div class="table-heading-1"><h1>Leave Applications Record:</h1></div>
+    <div class="table-grid">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Applicant Name</th>
+                    <th scope="col">Application Date</th>
+                    <th scope="col">Leave Type</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">End Date</th>
+                    <th scope="col">Status</th>
+                    	</tr>
+                    	{% for application in leaves %}
+                    	{% if application.status == '2' and application.approved == 0 %}
+                  		<tr>
+                  			<td>{{application.id}}</td>
+                  			<td>{{application.employee.firstname}} {{application.employee.lastname}}</td>
+                  			<td>{{application.date_of_application}}</td>
+                  			<td>{{application.leave_type}}</td>
+                  			<td>{{application.leave_start_date}}</td>
+                  			<td>{{application.leave_end_date}}</td>
+                  			<td>Cancelled</td>
+                  		</tr>
+                  		{% else %}
+                  		<tr onclick="document.location='/progazer/view_leave_hr_id/{{application.token}}/';">
+                  		<td>{{application.id}}</td>
+                  		<td>{{application.employee.firstname}} {{application.employee.lastname}}</td>
+                  		<td>{{application.date_of_application}}</td>
+                  		<td>{{application.leave_type}}</td>
+                  		<td>{{application.leave_start_date}}</td>
+                  		<td>{{application.leave_end_date}}</td>
+                  		{% if application.status == '1' and application.approved == 1 %}
+                  		<td>Approved</td>
+                  		{% endif %}
+						{% if application.status == '1' and application.approved == 2 %}
+                  		<td>Rejected</td>
+                  		{% endif %}
+						{% if application.status == '1' and application.approved == 0 %}
+						<td>Pending</td>
+						{% endif %}
+                  		</tr>
+                    	{% endif %}
+                    	{% endfor %} 
+                  
+			</table>
+	</div>	
+	</div>
+
+		
+{% endblock %}

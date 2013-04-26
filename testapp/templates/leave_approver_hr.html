@@ -1,0 +1,127 @@
+{% extends "admin_home.html" %}
+{% block ss %}
+<title>Progazer | Leave Approver </title>
+<body>
+<body style="margin:0; padding:0; font-family:arial;">
+<div class="admin-left-sidebar">
+        	<ul>
+			<li ><a href="/progazer/login/">Dashboard</a></li>            
+            <li  ><a href="/progazer/employee/"> Add Employee </a></li>
+            <li><a href="/progazer/view_employee/"> View Employee </a></li>
+            <li><a href="/progazer/leave_application/">Add Leave</a></li>
+			<li  class="dashboard-active" ><a href="/progazer/leave_register_hr/">Leave Register</a></li>
+			<li><a href="/progazer/optional_holiday/">Optional Holidays</a></li>
+			<li><a href="/progazer/attendence/">Upload Attendence</a></li>
+			<li><a href="/progazer/view_attendence_emp/">Employee Attendence</a></li>
+			<li><a href="/progazer/view_attendence_date/">Date Attendence </a></li>
+			<li><a href="/progazer/manage_hr/">HR Group </a></li>
+			<li><a href="/progazer/manage_att_uploader/">Attendence Uploader Group</a></li>
+			<li><a href="/progazer/employee_upload/">Employee Uploader </a></li>
+			
+			
+			</ul>
+			</div>
+			<div class="admin-right-sidebar">
+<div class="main-bg">
+<div id="add-emp-wrapper">
+	<div class="emp-login-logo"></div>
+   <!--emp-login-container start here-->
+   <form method="post" action=".">{%csrf_token%}
+    <div class="add-project-container">
+	        	<div class="emp-right-heading">
+        		<h2>Leave Approver</h2>
+            </div>
+        <div class="add-emp-content">
+			<div class="emp-left-wrapper">
+				
+				<div class="add-emp-label">Name:</div>
+				<div class="emp-input-wrapper">
+				<input type="text" class="emp-input" value="{{employee_name}}" readonly="True" />
+				<div class="error-msg" >
+					
+				</div>
+				</div> 
+				 					
+				<div class="add-emp-label">Start Date:</div>
+				<div class="emp-input-wrapper">
+				<input type="text" class="emp-input" value="{{start_date}}" readonly="True"/>
+				<div class="error-msg" >
+										{{ form.startdate.errors }}
+										</div>
+				</div>	
+				<div class="add-emp-label">Choices:</div>
+				<div class="emp-input-wrapper">
+				<input type="text" class="emp-input" value="{{choices}}" readonly="True"/>
+                                         
+                </div>
+			</div> 
+
+			<div class="emp-right-wrapper">
+			
+				<div class="add-emp-label">Application Date:</div>
+				<div class="emp-input-wrapper">
+				<input type="text" class="emp-input" value="{{application_date}}" readonly="True" />
+				<div class="error-msg" >
+					
+				</div>
+				</div> 	
+				<div class="add-emp-label">End Date:</div>
+				<div class="emp-input-wrapper">
+				<input type="text" class="emp-input" readonly="True" value="{{end_date}}"/>
+				<div class="error-msg" >
+										{{ form.enddate.errors }}
+										</div>
+				</div>
+				<div class="add-emp-label">Leave Type:</div>
+				<div class="emp-input-wrapper">
+					<input type="text" class="emp-input" readonly="True" value="{{leave_type}}"/>				
+					<div class="error-msg" >
+					{{ form.leave_type.errors }}
+				</div>
+				</div>				
+                                         
+			</div> 		
+				<div class="add-emp-label">Remarks of applicant:</div>
+				<div class="emp-input-wrapper">
+					<textarea class="emp-textarea" name="remarks" readonly="True">{{remarks}}</textarea>
+					<div class="error-msg" >
+										{{ form.remarks.errors }}
+										</div>
+				</div>
+				<div class="add-emp-label">Reporter Remarks:</div>
+				<div class="emp-input-wrapper">
+					<textarea class="emp-textarea" readonly="True" name="approver_remarks">{{approver_remarks}}</textarea>
+					<div class="error-msg" >
+										{{ form.remarks.errors }}
+										</div>
+				</div>
+				<div class="add-emp-label">HR Remarks:</div>
+				<div class="emp-input-wrapper">
+					<textarea class="emp-textarea" name="hr_remarks"></textarea>
+					<div class="error-msg" >
+										{{ form.remarks.errors }}
+										</div>
+				</div>
+				<div class="emp-input-wrapper">
+					{% if application.approved == 0 %}
+					<input type="submit" value="Approve" name="approve" class="emp-button" onclick="return form_check()" />
+					<input type="submit" value="Reject" name="reject" class="emp-button" onclick="return form_check()" />
+					{% endif %}
+					{% if application.approved == 1 %}
+					<input type="submit" value="Reject" name="reject" class="emp-button" onclick="return form_check()" />
+					{% endif %}
+					{% if application.approved == 2 %}
+					<input type="submit" value="Approve" name="approve" class="emp-button" onclick="return form_check()" />
+					{% endif %}
+				</div>				
+
+			
+		</div>		
+    </div>
+    </form>
+    <!--emp-login-container end here-->
+</div>
+<!--emp-login-wrappe end here-->
+</div>
+
+{% endblock %}

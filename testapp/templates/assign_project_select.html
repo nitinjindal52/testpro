@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Progazer | Assign Project</title>
+<link href="{{STATIC_URL}}style/stylesheet.css" rel="stylesheet" type="text/css" />
+</head>
+<script type="text/javascript">
+        function view_chart() {
+        
+        				var project_id = document.getElementById('project').value;
+        				var department_id = document.getElementById('department').value;
+        				
+        				window.location = "/progazer/assign_projectt/"+project_id+"/"+department_id+"/";
+        				
+        }
+</script>
+<body>
+<div class="main-bg">
+<!--emp-login-wrappe start here-->
+<div id="add-emp-wrapper">
+	<div class="emp-login-logo"><a href="/progazer/login/"><img src="{{STATIC_URL}}images/logo.png" alt="logo" /></a></div>
+   </div>
+   <!--emp-login-container start here-->
+   <div id="prog-emp-wrap">
+	<div class="submit-form"><h1>Assin Project:</h1>
+		<div style="float:Left;" >
+		
+		<select class="emp-select" id="project">{%for project in project %} <option value="{{project.id}}">{{project.name}}</option>{% endfor %}</select>
+		</div>
+		<div >
+		
+		<select class="emp-select" id="project">{%for project in project %} <option value="{{project.id}}">{{project.name}}</option>{% endfor %}</select>
+		</div>
+		<div style="float:Right;" >
+		<select class="emp-select" id="department">{%for department in department %} <option value="{{department.id}}">{{department.department}}</option>{% endfor %}</select>
+		
+		<input type="submit" name="submit" value="submit" onclick="view_chart()"/>
+		
+		</div>
+		 

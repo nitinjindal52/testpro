@@ -1,0 +1,260 @@
+{% extends "admin/timesheet_extend.html" %}
+
+{%block ss %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Progazer | Add Employee</title>
+<link href="{{STATIC_URL}}style/stylesheet.css" rel="stylesheet" type="text/css" />
+</head>
+ <meta charset="utf-8" />
+ <link href="{{STATIC_URL}}images/progazer_logo1.png" type="image/ico" rel="icon">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+<script src="{{STATIC_URL}}js/jquery-1.8.3.js"></script>
+<script src="{{STATIC_URL}}js/jquery-ui.js"></script>
+<link rel="stylesheet" href="/resources/demos/style.css" />
+<link href="{{STATIC_URL}}style/jquery.selectbox.css" type="text/css" rel="stylesheet" />
+		
+		<script type="text/javascript" src="{{STATIC_URL}}js/jquery.selectbox-0.2.js"></script>
+		<script type="text/javascript">
+		$(function () {
+			$(".emp-select").selectbox();
+		});
+		</script>
+<script>
+$(function() {
+$( ".datepicker" ).datepicker({
+changeMonth: true,
+changeYear: true,
+yearRange: "1930:2099",
+dateFormat: 'yy-mm-dd'
+});
+});
+</script>
+
+<SCRIPT language=Javascript>
+       
+       function isNumberKey(evt)
+       {
+          var charCode = (evt.which) ? evt.which : event.keyCode;
+          if (charCode != 46 && charCode > 31 
+            && (charCode < 48 || charCode > 57))
+             return false;
+
+          return true;
+       }
+       
+    </SCRIPT>
+<script>
+			function lettersOnly(evt) {
+		
+					       evt = (evt) ? evt : event;
+					       var charCode = (evt.charCode) ? evt.charCode : ((evt.keyCode) ? evt.keyCode :
+					          ((evt.which) ? evt.which : 0));
+					       if (charCode > 32 && (charCode < 65 || charCode > 90) &&
+					          (charCode < 97 || charCode > 122)) {
+					          alert("Enter letters only.");
+					          evt.returnValue = false;
+					       	  if(evt.preventDefault) evt.preventDefault();
+					       }
+					       return true;
+					     }
+			     function validateEmail(emailField){
+			        var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+			
+			        if (reg.test(emailField.value) == false) 
+			        {
+			            alert('Invalid Email Address');
+			            return false;
+			        }
+			
+			        return true;
+			
+			}
+</script>
+	<script>
+	function checkform(){
+		
+		var a = document.getElementById('a').value;
+
+		var c = document.getElementById('c').value;
+		var d = document.getElementById('d').value;
+		var e = document.getElementById('e').value;
+		var f = document.getElementById('f').value;
+
+		if (a==""  || c=="" || d=="" || e=="" || f=="")
+		{
+		alert("Fill Mandatory Fields")
+		return false;
+		}
+		return true;
+		}
+	</script>
+	
+	<script>
+				var x={{popup}}
+				if(x=='1'){
+				alert("Employee Added")
+				}
+				if(x=='2'){
+				alert("Employee Exist")
+				}
+				if(x=='3'){
+				alert("Invalid Form")
+				}
+
+
+			</script>
+
+
+<body style="margin:0; padding:0; font-family:arial;">
+<div class="admin-left-sidebar">
+        	<ul>
+			<li ><a href="/progazer/login/">Dashboard</a></li>            
+            <li class="dashboard-active" ><a href="/progazer/employee/"> Add Employee </a></li>
+            <li ><a href="/progazer/view_employee/"> View Employee </a></li>
+            <li><a href="/progazer/leave_application/">Add Leave</a></li>
+			<li><a href="/progazer/leave_register_hr/">Leave Register</a></li>
+			<li><a href="/progazer/optional_holiday/">Optional Holidays</a></li>
+			<li><a href="/progazer/attendence/">Upload Attendence</a></li>
+			<li><a href="/progazer/view_attendence_emp/">Employee Attendence</a></li>
+			<li><a href="/progazer/view_attendence_date/">Date Attendence </a></li>
+			<li><a href="/progazer/manage_hr/">HR Group </a></li>
+			<li><a href="/progazer/manage_att_uploader/">Attendence Uploader Group</a></li>
+			<li><a href="/progazer/employee_upload/">Employee Uploader </a></li>
+			
+			
+			</ul>
+			</div>
+			<div class="admin-right-sidebar">
+<div class="main-bg">
+<!--emp-login-wrappe start here-->
+<div id="add-emp-wrapper">
+	<div class="emp-login-logo"></div>
+   <!--emp-login-container start here-->
+   <form method="post" action=".">{%csrf_token%}
+   <input type="hidden" value="{{user_id}}" name="created_by" />
+    <div class="add-project-container">
+	        	<div class="emp-right-heading">
+        		<h2>Add Employee</h2>
+            </div>
+            {{message}}
+        <div class="add-emp-content">
+        	
+			<div class="emp-left-wrapper">
+				<div class="add-emp-label">Unit:* </div>
+				<div class="emp-input-wrapper">
+					<select class="emp-select" name="unit" id="a">
+						<option {{form.unit}}</option>
+					</select><div class="error-msg" >{{form.unit.errors}} </div>
+				</div>
+				<div class="add-emp-label" >First Name:*</div>
+				<div class="emp-input-wrapper">
+				{{form.firstname}}<div class="error-msg" > {{form.firstname.errors}}</div>
+				<!-- <input type="text" name="firstname" onkeypress='lettersOnly(event)' class="emp-input" />
+			-->	</div> 
+				
+				<div class="add-emp-label">Date of Birth:*</div>
+				<div class="emp-input-wrapper">
+					{{form.dateofbirth}}<div class="error-msg" >{{form.dateofbirth.errors}}</div>
+				<!--
+				<input type="text" class="datepicker" name="dateofbirth" readonly="True" />
+				-->
+				</div> 	
+				<div class="add-emp-label">Level:*</div>
+				<div class="emp-input-wrapper">
+					
+					
+					<select class="emp-select" name="level" id="c">
+						<option {{form.level}}</option>
+					</select>
+				<div class="error-msg" >{{form.level.errors}}</div>
+				</div>	
+				<div class="add-emp-label">Location:*</div>
+				<div class="emp-input-wrapper">
+					<select class="emp-select" name="location" id="d">
+						<option {{form.location}}</option>						
+					</select>
+					<div class="error-msg" >{{form.location.errors}}</div>
+				</div> 					
+				<div class="add-emp-label">Email ID:*</div>
+				<div class="emp-input-wrapper">
+				{{form.email}}<div class="error-msg" >{{form.email.errors}}</div>
+				<!-- <input type="text" class="emp-input" onblur="validateEmail(this);" name="email"/>
+				-->
+				</div>
+				<div class="add-emp-label">Reporting Person:</div>
+				<div class="emp-input-wrapper">
+				<select class="emp-select" name="reporting_person">
+						<option value="0">-------</option>
+						{% for employee in employee_list %}
+						<option value={{employee.id}}>{{employee.firstname}} {{employee.lastname}}</option>
+						{% endfor %}						
+					</select>
+				</div>				
+				
+                                         
+			</div> 
+
+			<div class="emp-right-wrapper">
+			
+				<div class="add-emp-label">Old Employee ID:</div>
+				<div class="emp-input-wrapper">
+				<input type="text" class="emp-input" name="old_employee_id"/>	<div class="error-msg" >{{form.old_employee_id.errors}}</div>			
+				</div>	
+				<div class="add-emp-label">Last Name:*</div>
+				<div class="emp-input-wrapper">
+				{{form.lastname}}<div class="error-msg" >{{form.lastname.errors}}</div>
+			<!--	<input type="text" class="emp-input" onkeypress='lettersOnly(event)' name="lastname"/>				
+			-->	</div>
+				<div class="add-emp-label">Date of Joining:*</div>
+				<div class="emp-input-wrapper">
+				{{form.dateofjoining}}<div class="error-msg" >{{form.dateofjoining.errors}}</div>
+				<!--
+				<input type="text" class="datepicker" name="dateofjoining" readonly="True" />				
+			-->	</div>	
+				<div class="add-emp-label">Department:*</div>
+				<div class="emp-input-wrapper">
+					<select class="emp-select" name="department" id="e">
+						<option {{form.department}}</option>						
+					</select>
+					<div class="error-msg" >{{form.department.errors}}</div>
+				</div>	
+				<div class="add-emp-label">Designation:*</div>
+				<div class="emp-input-wrapper">
+					<select class="emp-select" name="designation" id="f">
+						<option {{form.designation}}</option>
+					</select>
+					<div class="error-msg" >{{form.designation.errors}}</div>
+				</div>					
+				<div class="add-emp-label">Contact Number:</div>
+				
+					<div class="emp-input-wrapper">
+						
+						
+					<input type="text" class="emp-input" onkeypress="return isNumberKey(event)" name="phone"/>				
+					<div class="error-msg" >{{form.phone.errors}}</div>
+					</div>
+                                         
+			</div> 		
+				<div class="add-emp-label">Skills/ Comments:</div>
+				<div class="emp-input-wrapper">
+					<textarea class="emp-textarea" name="skills"></textarea>
+				</div>
+				<div class="emp-input-wrapper">
+					<input type="submit" name="submit" value="Submit" class="emp-button" onclick="return checkform()"/>
+				</div>				
+
+			
+		</div>		
+    </div>
+    </form>
+    <!--emp-login-container end here-->
+</div>
+<!--emp-login-wrappe end here-->
+</div>
+<div class="emp-login-logo"></div>
+</body>
+</html>
+{% endblock %}

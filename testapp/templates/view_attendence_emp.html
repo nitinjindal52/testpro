@@ -1,0 +1,94 @@
+{% extends 'admin_home.html' %}
+{% block ss %}
+<title>Progazer | Employee Attendence </title>
+<script type="text/javascript">
+        function view_chart() {
+        
+        				var project_id = document.getElementById('project').value;
+        				var start_date = document.getElementById('start_date').value;
+        				var end_date = document.getElementById('end_date').value;
+        				if(project_id=="")
+        				{
+        				return false;
+        				}
+        				if(start_date=="")
+        				{
+        				return false;
+        				}
+        				if(end_date=="")
+        				{
+        				return false;
+        				}
+        				
+        				window.location = "/progazer/view_attendence_employee/"+project_id+"/"+start_date+"/"+end_date+"/";
+        				
+        }
+</script>
+	<div class="admin-left-sidebar">
+        	<ul>
+			<li ><a href="/progazer/login/">Dashboard</a></li>            
+            <li ><a href="/progazer/employee/"> Add Employee </a></li>
+            <li ><a href="/progazer/view_employee/"> View Employee </a></li>
+            <li><a href="/progazer/leave_application/">Add Leave</a></li>
+			<li><a href="/progazer/leave_register_hr/">Leave Register</a></li>
+			<li><a href="/progazer/optional_holiday/">Optional Holidays</a></li>
+			<li><a href="/progazer/attendence/">Upload Attendence</a></li>
+			<li  class="dashboard-active"><a href="/progazer/view_attendence_emp/">Employee Attendence</a></li>
+			<li><a href="/progazer/view_attendence_date/">Date Attendence </a></li>
+			<li><a href="/progazer/manage_hr/">HR Group </a></li>
+			<li><a href="/progazer/manage_att_uploader/">Attendence Uploader Group</a></li>
+			<li><a href="/progazer/employee_upload/">Employee Uploader </a></li>
+			
+			
+			</ul>
+	</div>
+	<div class="admin-right-sidebar">
+			<div style="float:Left; padding:5px; font-family:arial; color:"#000"; >
+				<label style="padding:5px 3px; " > Employee: </label>
+				<select class="emp-select" id="project" onchange="view_chart()" >
+					{% if selected_employee == "" %}
+					<option value="">Select Employee</option>
+					{% else %}
+					<option value="{{selected_employee.id}}">{{selected_employee.firstname}} {{selected_employee.lastname}}</option>
+					{% endif %}
+					{%for employee in employee_list %}
+						{% if employee.id != selected_employee.id %} 
+						<option value="{{employee.id}}">{{employee.firstname}} {{employee.lastname}}</option>
+						{% endif %}
+					{% endfor %}
+				</select>
+			</div>
+			<div style="float:left; margin:5px 0 0 186px; font-family:arial; color:"#000"; >
+			<label style="padding:5px 3px; " > From Date: </label>
+			<div class="emp-input-wrapper">
+				<input type="text" style="width:200px" value="{{start_date}}" id="start_date"  class="datepicker" onchange="view_chart()"/>
+				</div>
+		</div>
+		<div style="float:Right; padding:5px; font-family:arial; color:"#000";" >
+		
+			<label style="padding:5px 3px; " > To Date: </label>
+			<div class="emp-input-wrapper">
+				<input type="text" style="width:200px"  id="end_date" value="{{end_date}}" class="datepicker" onchange="view_chart()"/>
+				</div>
+		</div>
+			<div class="table-grid">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">In Time</th>
+                    <th scope="col">Out Time</th>
+                    <th scope="col">Total Time</th>
+                  </tr>
+                  {% for emp in emp_attend %}
+                 		<tr>
+                 			<td>{{emp.date}}</td>
+                 			<td>{{emp.in_time}}</td>
+                 			<td>{{emp.out_time}}</td>
+                 			<td>{{emp.duration}}</td>
+                 		</tr> 
+                  {% endfor %}
+                 </table>
+             </div>
+	</div>
+	
+{% endblock %}

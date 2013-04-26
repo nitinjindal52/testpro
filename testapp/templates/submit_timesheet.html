@@ -1,0 +1,22 @@
+<head>
+<html>
+<h1> {{ message }} </h1>
+</br>
+<label><b> project  : </b></label>{{ obj.project }}
+</br>
+<label><b> module : </b></label>{{ obj.module }}
+</br>
+<label><b> date : </b></label>{{ obj.date }}
+</br>
+<label><b> hours : </b></label>{{ obj.hours }}
+</br>
+<label><b> comments : </b></label>{{ obj.comments }}
+</br>
+{%block content%}
+<form method="post" action=".">{%csrf_token%}
+<input type="submit" name="update" value="Submit">
+</form>
+{% endblock %}
+</br>
+</html>
+</head>

@@ -1,0 +1,109 @@
+{% extends "admin_home.html" %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Progazer | Add Client</title>
+<link href="{{STATIC_URL}}style/stylesheet.css" rel="stylesheet" type="text/css" />
+</head>
+
+<script>
+var x={{popup}}
+if(x=='1'){
+alert("Client Added")
+}
+
+
+</script>
+<body>
+{%block ss %}
+<title>Progazer | Add Client </title>
+<div class="admin-left-sidebar">
+        	<ul>
+            <li><a href="/progazer/login/">Dashboard</a></li>            
+            <li><a href="/progazer/addtimesheet/"> Add Timesheet </a></li>
+            <li><a href="/progazer/leave_application/">Add Leave</a></li>
+			<li><a href="/progazer/viewtimesheet/"> View Timesheet </a></li>
+			<li><a href="/progazer/assign_project/"> Assign Project  </a></li>
+			<li><a href="/progazer/re_assign_project/"> Re-assign Project  </a></li>
+			<li><a href="/progazer/addproject/"> Add Project </a></li>
+			<li><a href="/progazer/view_project/"> View Project </a></li>
+			<li class="dashboard-active"><a href="/progazer/addclient/"> Add Client </a></li>
+			<li><a href="/progazer/view_client/"> View Client </a></li>
+			<li><a href="/admin/"> View Database </a></li>                                
+            </ul>
+        </div>
+        
+        
+        <div class="admin-right-sidebar">
+<div class="main-bg">
+<!--emp-login-wrappe start here-->
+<div id="add-emp-wrapper">
+	<div class="emp-login-logo"></div>
+   <!--emp-login-container start here-->
+   <form method="post" action=".">{%csrf_token%}
+    <div class="add-project-container">
+	        	<div class="emp-right-heading">
+        		<h2>Add Client</h2>
+        		<div class="error-msg" >
+				{{ message }}
+				</div>
+            </div>
+        <div class="add-emp-content">
+			<div class="emp-left-wrapper">
+				
+				<div class="add-emp-label">Name:*</div>
+				<div class="emp-input-wrapper">
+				{{form.name}}
+				<div class="error-msg" >
+				{{ form.name.errors }}
+				</div>
+				</div> 
+				 					
+				<div class="add-emp-label">Email ID:*</div>
+				<div class="emp-input-wrapper">
+				{{form.email}}
+				<div class="error-msg" >
+										{{ form.email.errors }}
+										</div>
+				</div>				
+				
+                                         
+			</div> 
+
+			<div class="emp-right-wrapper">
+			
+				<div class="add-emp-label">Company:*</div>
+				<div class="emp-input-wrapper">
+				{{form.company}}				
+				<div class="error-msg" >
+										{{ form.company.errors }}
+										</div>
+				</div>	
+							
+                                         
+			</div> 		
+				<div class="add-emp-label">Comments:*</div>
+				<div class="emp-input-wrapper">
+					{{form.comments}}
+					<div class="error-msg" >
+										{{ form.comments.errors }}
+										</div>
+				</div>
+				<div class="emp-input-wrapper">
+					<input type="submit" value="Submit" class="emp-button" />
+					
+				</div>				
+
+			
+		</div>		
+    </div>
+    </form>
+    <!--emp-login-container end here-->
+</div>
+<!--emp-login-wrappe end here-->
+</div>
+
+{% endblock %}
+</body>
+</html>

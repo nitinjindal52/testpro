@@ -1,0 +1,123 @@
+{% extends "admin_home.html" %}
+{%block ss %}
+<title>Progazer | Leave Application </title>
+
+<body style="margin:0; padding:0; font-family:arial;">
+{% if user_status == '3' %}
+			<div class="admin-left-sidebar">
+        	<ul>
+			<li ><a href="/progazer/login/">Dashboard</a></li>            
+            <li ><a href="/progazer/employee/"> Add Employee </a></li>
+            <li ><a href="/progazer/view_employee/"> View Employee </a></li>
+            <li  class="dashboard-active" ><a href="/progazer/leave_application/">Add Leave</a></li>
+			<li><a href="/progazer/leave_register_hr/">Leave Register</a></li>
+			<li><a href="/progazer/optional_holiday/">Optional Holidays</a></li>
+			<li><a href="/progazer/attendence/">Upload Attendence</a></li>
+			<li><a href="/progazer/view_attendence_emp/">Employee Attendence</a></li>
+			<li><a href="/progazer/view_attendence_date/">Date Attendence </a></li>
+			<li><a href="/progazer/manage_hr/">HR Group </a></li>
+			<li><a href="/progazer/manage_att_uploader/">Attendence Uploader Group</a></li>
+			<li><a href="/progazer/employee_upload/">Employee Uploader </a></li>
+			
+			
+			
+			</div>
+			{% else %}
+				<body style="margin:0; padding:0; font-family:arial;">
+			<div class="admin-left-sidebar">
+        	<ul>
+            <li ><a href="/progazer/login/">Dashboard</a></li>            
+            <li ><a href="/progazer/addtimesheet/"> Add Timesheet </a></li>
+            <li  class="dashboard-active"><a href="/progazer/leave_application/">Add Leave</a></li>
+            {% if user_status == '1' %}
+			<li><a href="/progazer/viewtimesheet/"> View Timesheet </a></li>
+			<li><a href="/progazer/assign_project/"> Assign Project  </a></li>
+			<li><a href="/progazer/re_assign_project/"> Re-assign Project  </a></li>
+			<li><a href="/progazer/addproject/"> Add Project </a></li>
+			<li><a href="/progazer/view_project/"> View Project </a></li>
+			<li><a href="/progazer/addclient/"> Add Client </a></li>
+			<li><a href="/progazer/view_client/"> View Client </a></li>
+			<li><a href="/admin/"> View Database </a></li> 
+			{% else %}
+            {% if user_status == '2' %}
+            <li><a href="/progazer/viewtimesheet/"> View Timesheet </a></li>
+            {% endif %}
+            {% endif %}
+            </ul>
+        </div>
+        
+        
+        
+					
+			{% endif %}
+			<div class="admin-right-sidebar">
+<div class="main-bg">
+<!--emp-login-wrappe start here-->
+<div id="add-emp-wrapper">
+	<div class="emp-login-logo"></div>
+   <!--emp-login-container start here-->
+   <form method="post" action=".">{%csrf_token%}
+    <div class="add-project-container">
+	        	<div class="emp-right-heading">
+        		<h2>Edit Leave Application</h2>
+            </div>
+        <div class="add-emp-content">
+			<div class="emp-left-wrapper">
+				
+				<div class="add-emp-label">Name:</div>
+				<div class="emp-input-wrapper">
+				
+				<input type="text" class="emp-input" value="{{employee_name}}" readonly="True" />
+				<div class="error-msg" >
+				</div>
+				</div> 
+				<div class="add-emp-label">Start Date:</div>
+				<div class="emp-input-wrapper">
+				{{form.leave_start_date}}
+				</div>	
+				<div class="add-emp-label">Choices:</div>
+				<div class="emp-input-wrapper">
+				<input type="text" class="emp-input" value="{{choices}}" readonly="True" />
+                </div>
+			</div> 
+
+			<div class="emp-right-wrapper">
+			
+				<div class="add-emp-label">Application Date:</div>
+				<div class="emp-input-wrapper">
+				{{form.date_of_application}}
+				<div class="error-msg" >
+					
+				</div>
+				</div> 	
+				<div class="add-emp-label">End Date:</div>
+				<div class="emp-input-wrapper">
+				{{form.leave_end_date}}
+				
+				</div>
+				<div class="add-emp-label">Leave Type:</div>
+				<div class="emp-input-wrapper">
+					<input type="text" class="emp-input" value="{{leave_type}}" readonly="True" />
+				</div>				
+                                         
+			</div> 		
+				<div class="add-emp-label">Remarks of applicant:</div>
+				<div class="emp-input-wrapper">
+					{{form.remarks}}
+					
+				</div>
+				
+				<div class="emp-input-wrapper">
+					<input type="submit" value="Cancel Application" name="cancel" class="emp-button" />
+					
+				</div>				
+
+			
+		</div>		
+    </div>
+    </form>
+    <!--emp-login-container end here-->
+</div>
+</div>
+{% endblock %}
+</body>

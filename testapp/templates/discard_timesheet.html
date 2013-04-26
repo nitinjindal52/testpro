@@ -1,0 +1,106 @@
+{% extends "admin_home.html" %}
+			
+			
+			{%block ss %}
+			<title>Progazer | Discard Timesheet </title>
+			<body style="margin:0; padding:0; font-family:arial;">
+<div class="admin-left-sidebar">
+        	<ul>
+            <li><a href="/progazer/login/">Dashboard</a></li>            
+            <li><a href="/progazer/addtimesheet/"> Add Timesheet </a></li>
+            <li><a href="/progazer/leave_application/">Add Leave</a></li>
+			<li  class="dashboard-active" ><a href="/progazer/viewtimesheet/"> View Timesheet </a></li>
+			{% if user_status == '1' %}
+			<li><a href="/progazer/assign_project/"> Assign Project  </a></li>
+			<li><a href="/progazer/re_assign_project/"> Re-assign Project  </a></li>
+			<li><a href="/progazer/addproject/"> Add Project </a></li>
+			<li><a href="/progazer/view_project/"> View Project </a></li>
+			<li><a href="/progazer/addclient/"> Add Client </a></li>
+			<li><a href="/progazer/view_client/"> View Client </a></li>
+			<li><a href="/admin/"> View Database </a></li>   
+			{% endif %}                             
+            </ul>
+</div>
+<div class="admin-right-sidebar">
+				<div class="main-bg">
+					<div id="add-emp-wrapper">
+						<div class="emp-login-logo"></div>
+						<div class="add-project-container">
+							<div class="emp-right-heading">
+								<h2>Discard Timesheet</h2>
+							</div>
+			
+							
+							<div class="add-emp-content">
+								<div class="emp-left-wrapper">
+									<div class="add-emp-label">Employee Name:</div>
+									<div class="emp-input-wrapper">
+										
+										<input type="text" class="emp-input" readonly="True" value="{{record.firstname.firstname}} {{record.firstname.lastname}}">
+									<div class="error-msg" >
+										{{ form.name.errors }}
+										</div>
+									</div>
+									<div class="add-emp-label">Project:</div>
+									<div class="emp-input-wrapper">
+										<input type="text" class="emp-input" readonly="True" value="{{record.project}}"/>
+										<div class="error-msg" >
+										{{form.type.errors}}
+										</div>
+									</div>
+									<div class="add-emp-label">Activity:</div>
+									<div class="emp-input-wrapper">
+										<input type="text" class="emp-input" readonly="True" value="{{record.module}}"/>
+										<div class="error-msg" >
+										{{form.client.errors}}
+										</div>
+									</div>
+								</div>
+								
+								<div class="emp-right-wrapper">											
+									<div class="add-emp-label">Date:</div>
+									<div class="emp-input-wrapper">		
+										<input type="text" class="emp-input" readonly="True" value="{{record.date}}"/>
+										<div class="error-msg" >
+										{{form.startdate.errors}}
+										</div>
+									</div>
+									<div class="add-emp-label">Hours:</div>
+									<div class="emp-input-wrapper">		
+										<input type="text" class="emp-input" readonly="True" value="{{record.hours}}"/>
+										<div class="error-msg" >
+										{{form.status.errors}}
+										</div>
+									</div>	
+									
+									</div>
+									<div class="add-emp-label">Comments:</div>
+									<div class="emp-input-wrapper">
+										<textarea class="emp-textarea" readonly="True">{{record.comments}}</textarea>
+										<div class="error-msg" >
+															{{ form.remarks.errors }}
+															</div>
+									</div>
+									<form method="post" action=".">{%csrf_token%}
+									<div class="add-emp-label">Your Remarks:</div>
+									<div class="emp-input-wrapper">
+										<textarea class="emp-textarea" name="discard_reason"></textarea>
+										<div class="error-msg" >
+															{{ form.remarks.errors }}
+															</div>
+									</div>
+									
+									<input type="hidden" value="{{record.id}}" name="record_id"/>
+									<div class="emp-input-wrapper">	
+										<input type="submit" name="final_discard" value="Discard" class="emp-button" />
+									</div>
+									</form>
+								</div>  
+							</div>  
+							
+						</div>
+					</div>
+				</div>										
+					
+			{% endblock %}
+

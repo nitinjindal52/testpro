@@ -1,0 +1,195 @@
+{% extends "admin_home.html" %}
+{% block ss %}
+<title>Progazer | Edit Employee </title>
+
+<SCRIPT language=Javascript>
+       
+       function isNumberKey(evt)
+       {
+          var charCode = (evt.which) ? evt.which : event.keyCode;
+          if (charCode != 46 && charCode > 31 
+            && (charCode < 48 || charCode > 57))
+             return false;
+
+          return true;
+       }
+       
+    </SCRIPT>
+    <script>
+    function checkphone(){
+    
+    						var x=document.getElementById('phone-numberr').value;
+    					
+    if (x=="None")
+    {
+     
+        $("#phone-numberr").val("");
+    return true;
+    }
+$("#phone-numberr").val(x);
+    return true;
+    }
+    </script>
+<script>
+			function lettersOnly(evt) {
+		
+					       evt = (evt) ? evt : event;
+					       var charCode = (evt.charCode) ? evt.charCode : ((evt.keyCode) ? evt.keyCode :
+					          ((evt.which) ? evt.which : 0));
+					       if (charCode > 32 && (charCode < 65 || charCode > 90) &&
+					          (charCode < 97 || charCode > 122)) {
+					          alert("Enter letters only.");
+					          evt.returnValue = false;
+					       	  if(evt.preventDefault) evt.preventDefault();
+					       }
+					       return true;
+					     }
+			     function validateEmail(emailField){
+			        var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+			
+			        if (reg.test(emailField.value) == false) 
+			        {
+			            alert('Invalid Email Address');
+			            return false;
+			        }
+			
+			        return true;
+			
+			}
+</script>
+
+
+<body style="margin:0; padding:0; font-family:arial;">
+<div class="admin-left-sidebar">
+        	<ul>
+			<li ><a href="/progazer/login/">Dashboard</a></li>            
+            <li  ><a href="/progazer/employee/"> Add Employee </a></li>
+            <li class="dashboard-active"><a href="/progazer/view_employee/"> View Employee </a></li>
+            <li><a href="/progazer/leave_application/">Add Leave</a></li>
+			<li><a href="/progazer/leave_register_hr/">Leave Register</a></li>
+			<li><a href="/progazer/optional_holiday/">Optional Holidays</a></li>
+			<li><a href="/progazer/attendence/">Upload Attendence</a></li>
+			<li><a href="/progazer/view_attendence_emp/">Employee Attendence</a></li>
+			<li><a href="/progazer/view_attendence_date/">Date Attendence </a></li>
+			<li><a href="/progazer/manage_hr/">HR Group </a></li>
+			<li><a href="/progazer/manage_att_uploader/">Attendence Uploader Group</a></li>
+			<li><a href="/progazer/employee_upload/">Employee Uploader </a></li>
+			
+			
+			</ul>
+			</div>
+			<div class="admin-right-sidebar">
+<div class="main-bg">
+<!--emp-login-wrappe start here-->
+<div id="add-emp-wrapper">
+	<div class="emp-login-logo"></div>
+   <!--emp-login-container start here-->
+   <form method="post" action="." >{%csrf_token%}
+    <div class="add-project-container">
+	        	<div class="emp-right-heading">
+        		<h2>Edit Employee</h2>
+            </div>
+            {{message}}
+        <div class="add-emp-content">
+        	
+			<div class="emp-left-wrapper">
+				<div class="add-emp-label">Unit: {{form.unit.errors}} </div>
+				<div class="emp-input-wrapper">
+					<select class="emp-select" name="unit" >
+						
+						<option {{form.unit}}</option>
+					</select>
+				</div>
+				<div class="add-emp-label">First Name: {{form.firstname.errors}}</div>
+				<div class="emp-input-wrapper">
+				<input type="text" name="firstname" onkeypress='lettersOnly(event)' class="emp-input" value="{{employee.firstname}}" readonly="True"/>
+				</div> 
+				
+				<div class="add-emp-label">Date of Birth:{{form.dateofbirth.errors}}</div>
+				<div class="emp-input-wrapper">
+				<!--<input type="text" class="emp-input" readonly="True" value="{{form.dateofbirth}}"   />
+				-->
+				{{form.dateofbirth}}
+				</div> 	
+				<div class="add-emp-label">Level:{{form.level.errors}}</div>
+				<div class="emp-input-wrapper">
+					<select class="emp-select" name="level" >
+						
+						<option {{form.level}}</option>
+					</select>
+				</div>	
+				<div class="add-emp-label">Location:{{form.location.errors}}</div>
+				<div class="emp-input-wrapper">
+					<select class="emp-select" name="location">
+						<option {{form.location}}</option>						
+					</select>
+				</div> 					
+				<div class="add-emp-label">Email ID:{{form.email.errors}}</div>
+				<div class="emp-input-wrapper">
+				<input type="text" class="emp-input" name="email" value={{employee.email}} readonly="True"/>
+				</div>				
+				<div class="add-emp-label">Reporting Person:</div>
+				<div class="emp-input-wrapper">
+				<select class="emp-select" name="reporting_person">
+						<option value={{employee.reporting_person_value}}>{{reporting_person}}</option>
+						<option value="0">------</option>
+						{% for employee in employee_list %}
+						<option value={{employee.id}}>{{employee.firstname}} {{employee.lastname}}</option>
+						{% endfor %}						
+					</select>
+				</div>
+                                         
+			</div> 
+
+			<div class="emp-right-wrapper">
+			
+				<div class="add-emp-label">Old Employee ID:{{form.old_employee_id.errors}}</div>
+				<div class="emp-input-wrapper">
+				<input type="text" class="emp-input" name="old_employee_id" value="{{employee.old_employee_id}}" readonly="True" />				
+				</div>	
+				<div class="add-emp-label">Last Name:</div>
+				<div class="emp-input-wrapper">
+				<input type="text" class="emp-input" onkeypress='lettersOnly(event)' name="lastname" value="{{employee.lastname}}" readonly="True"/>				
+				</div>
+				<div class="add-emp-label">Date of Joining:</div>
+				<div class="emp-input-wrapper">
+				<!--<input type="text" value="{{employee.dateofjoining}}" class="emp-input" name="dateofjoining" readonly="True"  />				
+				-->
+				{{form.dateofjoining}}
+				</div>	
+				<div class="add-emp-label">Department:</div>
+				<div class="emp-input-wrapper">
+					<select class="emp-select" name="department">
+						<option {{form.department}}</option>						
+					</select>
+				</div>	
+				<div class="add-emp-label">Designation:</div>
+				<div class="emp-input-wrapper">
+					<select class="emp-select" name="designation">
+						<option {{form.designation}}</option>
+					</select>
+				</div>					
+				<div class="add-emp-label">Contact Number:</div>
+					<div class="emp-input-wrapper">
+					<input type="text" id="phone-numberr" class="emp-input" value="{{employee.phone}}" name="phone" onkeypress="return isNumberKey(event)" onfocus="if(this.value=='None'){this.value=''}"/>				
+					</div>
+                                         
+			</div> 		
+				<div class="add-emp-label">Skills/ Comments:</div>
+				<div class="emp-input-wrapper">
+					<textarea class="emp-textarea" name="skills"  >{{employee.skills}}</textarea>
+				</div>
+				<div class="emp-input-wrapper">
+					<input type="submit" name="submit" value="Update" class="emp-button" onclick="return checkphone()"/>
+				</div>				
+
+			
+		</div>		
+    </div>
+
+    </form>
+</div>
+</div>
+
+
+{% endblock %}

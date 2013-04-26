@@ -1,0 +1,90 @@
+{% extends "admin_home.html" %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Progazer | View Client</title>
+<link href="{{STATIC_URL}}style/stylesheet.css" rel="stylesheet" type="text/css" />
+<link href="{{STATIC_URL}}style/jquery.selectbox.css" type="text/css" rel="stylesheet" />
+		<script type="text/javascript" src="{{STATIC_URL}}js/jquery-1.7.2.min.js"></script>
+		<script type="text/javascript" src="{{STATIC_URL}}js/jquery.selectbox-0.2.js"></script>
+		<script type="text/javascript">
+		$(function () {
+			$(".emp-select").selectbox();
+		});
+		</script>
+</head>
+<body>
+{% block ss %}
+<title>Progazer | View Client </title>
+<div class="admin-left-sidebar">
+        	<ul>
+            <li><a href="/progazer/login/">Dashboard</a></li>            
+            <li><a href="/progazer/addtimesheet/"> Add Timesheet </a></li>
+            <li><a href="/progazer/leave_application/">Add Leave</a></li>
+			<li><a href="/progazer/viewtimesheet/"> View Timesheet </a></li>
+			<li><a href="/progazer/assign_project/"> Assign Project  </a></li>
+			<li><a href="/progazer/re_assign_project/"> Re-assign Project  </a></li>
+			<li><a href="/progazer/addproject/"> Add Project </a></li>
+			<li><a href="/progazer/view_project/"> View Project </a></li>
+			<li><a href="/progazer/addclient/"> Add Client </a></li>
+			<li class="dashboard-active"><a href="/progazer/view_client/"> View Client </a></li>
+			<li><a href="/admin/"> View Database </a></li>                                
+            </ul>
+        </div>
+        
+        
+        <div class="admin-right-sidebar">	
+<div class="table-heading-1"><h1>Client Records:</h1></div>
+<div class="table-grid">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Client</th>
+                    <th scope="col">Company</th>
+                    <th scope="col">Email</th>
+                  </tr>
+  					
+  	{% for client in client %}
+  					
+  					<tr onclick="document.location='/progazer/view_clientid/{{ client.id }}/';" >
+                    <td>{{client.id}}</a></td>
+                    <td>{{client.name}}</td>
+                    <td>{{client.company}}</td>
+                    <td>{{client.email}}</td>
+                    </tr>   
+                  	               
+       {% endfor %}           
+                  
+				</table>
+				</div>
+
+	  	
+	  	</div> 
+	  	{% endblock %}
+	  <!--	</div>
+</body>
+	
+	</div>
+	<div class="timesheet-table">
+		<div class="timesheet-table-heading-blank">
+			<div class="add-blank1">ID</div>
+			<div class="add-blank">Client </div>
+			<div class="activity">Company </div>
+			<div class="role-1"></div>
+			<div class="hours">Email</div>
+			<div class="date">Comments</div>
+			<div class="comment"></div>
+	</div>
+	{% for client in client %}
+		<div class="timesheet-table-tr" onmouseover="this.style.background='#ededed';" onmouseout="this.style.background='#fff';"  >
+		<a href="/progazer/view_clientid/{{ client.id }}/" style="color:#443939" >
+			<div class="add-blank1">{{client.id}}</div>
+			<div class="add-1">{{client.name}}</div>
+			<div class="activity-1">{{client.company}}</div>
+			<div class="role-1"></div>
+			<div class="hours-1">{{client.email}}</div>
+			<div class="date-1">{{client.comments}}</div></a>
+		</div>	
+	  	{% endfor %} 
+	  -->

@@ -1,0 +1,116 @@
+{% extends "admin_home.html" %}
+{%block ss %}
+<title>Progazer | Leave </title>
+
+<body style="margin:0; padding:0; font-family:arial;">
+{% if user_status == '3' %}
+			<div class="admin-left-sidebar">
+        	<ul>
+			<li ><a>Dashboard</a></li>            
+            <li ><a href="/progazer/employee/"> Add Employee </a></li>
+            <li ><a href="/progazer/view_employee/"> View Employee </a></li>
+            <li  class="dashboard-active"><a href="/progazer/leave_application/">Add Leave</a></li>
+			<li><a href="/progazer/leave_register_hr/">Leave Register</a></li>
+			<li><a href="/progazer/optional_holiday/">Optional Holidays</a></li>
+			<li><a href="/progazer/attendence/">Upload Attendence</a></li>
+			<li><a href="/progazer/view_attendence_emp/">Employee Attendence</a></li>
+			<li><a href="/progazer/view_attendence_date/">Date Attendence </a></li>
+			<li><a href="/progazer/manage_hr/">HR Group </a></li>
+			<li><a href="/progazer/manage_att_uploader/">Attendence Uploader Group</a></li>
+			<li><a href="/progazer/employee_upload/">Employee Uploader </a></li>
+			
+			
+			
+			</div>
+			{% else %}
+				<body style="margin:0; padding:0; font-family:arial;">
+			<div class="admin-left-sidebar">
+        	<ul>
+            <li ><a>Dashboard</a></li>            
+            <li ><a href="/progazer/addtimesheet/"> Add Timesheet </a></li>
+            <li  class="dashboard-active" ><a href="/progazer/leave_application/">Add Leave</a></li>
+            {% if user_status == '1' %}
+			<li><a href="/progazer/viewtimesheet/"> View Timesheet </a></li>
+			<li><a href="/progazer/assign_project/"> Assign Project  </a></li>
+			<li><a href="/progazer/re_assign_project/"> Re-assign Project  </a></li>
+			<li><a href="/progazer/addproject/"> Add Project </a></li>
+			<li><a href="/progazer/view_project/"> View Project </a></li>
+			<li><a href="/progazer/addclient/"> Add Client </a></li>
+			<li><a href="/progazer/view_client/"> View Client </a></li>
+			<li><a href="/admin/"> View Database </a></li> 
+			{% else %}
+            {% if user_status == '2' %}
+            <li><a href="/progazer/viewtimesheet/"> View Timesheet </a></li>
+            {% endif %}
+            {% endif %}
+            </ul>
+        </div>
+        
+        
+        
+					
+			{% endif %}
+			<div class="admin-right-sidebar">
+        <form method="post" action=".">{%csrf_token%}
+	<input type="submit" class="emp-button-10" name="new" style="float:right; margin:5px;" value="New Application" />
+	</form>
+        <div class="time-picker-head"><h1>Leave Application Records: </h1></div>
+        
+<div class="table-grid">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Application Date</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">End Date</th>
+                    <th scope="col">Leave Type</th>
+                    <th scope="col">Status</th>
+                  </tr>
+  					
+  	{% for application in application_list %}
+  					{% if application.status == '1' %}
+  					<tr onclick="document.location='/progazer/leave_application_edit/{{ application.token }}/';" >
+                    <td>{{application.id}}</td>
+                    <td>{{application.date_of_application}}</td>
+                    <td>{{application.leave_start_date}}</td>
+                    <td>{{application.leave_end_date}}</td>
+                    <td>{{application.leave_type}}</td>
+                    <td>Pending</td>
+                    
+                    {% else %}
+                    <tr>
+                    <td>{{application.id}}</td>
+                    <td>{{application.date_of_application}}</td>
+                    <td>{{application.leave_start_date}}</td>
+                    <td>{{application.leave_end_date}}</td>
+                    <td>{{application.leave_type}}</td>
+                    <td>Cancelled</td>
+                    {% endif %}
+                  	</tr>   
+                  	               
+       {% endfor %}  
+                {% for application in application_list_approved %}
+                <tr>
+                    <td>{{application.id}}</td>
+                    <td>{{application.date_of_application}}</td>
+                    <td>{{application.leave_start_date}}</td>
+                    <td>{{application.leave_end_date}}</td>
+                    <td>{{application.leave_type}}</td>
+                    <td>Approved</td>
+                  	</tr>
+                  {% endfor %}
+				{% for application in application_list_rejected %}
+				<tr>
+                    <td>{{application.id}}</td>
+                    <td>{{application.date_of_application}}</td>
+                    <td>{{application.leave_start_date}}</td>
+                    <td>{{application.leave_end_date}}</td>
+                    <td>{{application.leave_type}}</td>
+                    <td>Rejected</td>
+                  	</tr>
+                  	{% endfor %}
+				</table>
+				</div>
+  	</div>
+  	
+  	{% endblock %}

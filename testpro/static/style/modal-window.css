@@ -1,0 +1,55 @@
+﻿.modal-overlay {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	/*background:transparent url(../images/transparent-bg.png) repeat;*/
+	background:#000;
+	z-index: 101;
+	border:none;
+  /* IE 8 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+
+  /* IE 5-7 */
+  filter: alpha(opacity=80);
+
+  /* Netscape */
+  -moz-opacity: 0.8;
+
+  /* Safari 1.x */
+  -khtml-opacity: 0.8;
+
+  /* Good browsers */
+  opacity: 0.8;	
+	
+}
+.modal-window {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin: 0;
+	padding: 0;
+	z-index: 102;
+	background:none;
+	border: solid 8px #000;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border:none;
+	
+}
+.close-window {
+	position: absolute;
+	width: 47px;
+	height: 47px;
+	right:5px;
+	top:5px;
+	background: transparent url(../images/close-button.png) no-repeat scroll right top;
+	text-indent: -99999px;
+	overflow: hidden;
+	cursor: pointer;
+}

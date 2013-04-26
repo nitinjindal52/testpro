@@ -1,0 +1,23 @@
+<head>
+<html>
+<h4>{{ message }}</h4>
+</br>
+
+<label><b> project </b></label>{{ obj.project }}
+</br>
+<label><b> module </b></label>{{ obj.module }}
+</br>
+<label><b> date </b></label>{{ obj.date }}
+</br>
+{%block content%}
+<form method="post" action=".">{%csrf_token%}
+<input type="hidden" name="id" value="{{ obj.id }}">
+Hours<input type="text" name="hours" value="{{ obj.hours }}">
+</br>
+Comments<input type="text" name="comments" value={{ obj.comments }}>
+<input type="submit" name="update" value="update">
+</form>
+{% endblock %}
+</br>
+</html>
+</head>

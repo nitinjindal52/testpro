@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Progazer | ADMIN</title>
+<link href="{{STATIC_URL}}style/stylesheet.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="main-bg">
+<!--emp-login-wrappe start here-->
+	<div class="emp-login-logo"><a href="/progazer/admin_home/"><img src="{{STATIC_URL}}images/logo.png" alt="logo" /></a></div>
+   
+<div style="float:Right;"><div class="user-login"><h1>Hi <span>{{ user_name }}</span></h1></div> <a href="/progazer/logout/"> <img src="{{ STATIC_URL }}images/logout.jpg" alt="logout" border="0" title="Logout"/> </a><a href="/progazer/change_password/"><img src="{{ STATIC_URL }}images/setting.jpg" alt="logout" title="Password" border="0" /></a></div>
+
+<div class="wrapper-browser-center">
+	<div class="wrapper-nav">
+		<ul>
+			<li><a href="/progazer/employee/"> Add Employee </a></li>
+			<li><a href="/progazer/view_employee/"> View Employee </a></li>
+			<li><a href="/progazer/leave_register_hr/"> Leave Register </a></li>
+		</ul>
+	</div>
+	
+	<div class="nav-content">
+	
+	<h1>Welcome to Admin page</h1>
+	<p> Lorum lipsum text Lorum lipsum text Lorum lipsum text Lorum lipsum text Lorum lipsum text Lorum lipsum text Lorum lipsum text Lorum lipsum text Lorum lipsum text Lorum lipsum text </p>
+	</div>
+</div>
+</body>
+</html>

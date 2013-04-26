@@ -1,0 +1,155 @@
+{% extends "admin/timesheet_extend.html" %}
+{%block ss %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Progazer | Edit Timesheet </title>
+<link href="{{STATIC_URL}}style/stylesheet.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="{{STATIC_URL}}js/jquery-1.8.2.min.js" ></script>
+		<script type="text/javascript" src="{{STATIC_URL}}js/validatejs.js" ></script>
+		<link href="{{STATIC_URL}}images/progazer_logo1.png" type="image/ico" rel="icon">
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="{{ STATIC_URL }}style/jquery-ui.css" />
+		<script src="{{ STATIC_URL }}js/jquery-1.8.3.js"></script>
+		<script src="{{ STATIC_URL }}js/jquery-ui.js"></script>
+		<link rel="stylesheet" href="/resources/demos/style.css" />
+		<link href="{{STATIC_URL}}style/jquery.selectbox_timesheet.css" type="text/css" rel="stylesheet" />
+		
+		<script type="text/javascript" src="{{STATIC_URL}}js/jquery.selectbox-0.2.js"></script>
+				<SCRIPT LANGUAGE="JavaScript">
+		      function confirmAction() {
+		        return confirm("{{name.firstname }}, Do you really want to submit?")
+		      }
+		</SCRIPT>
+		<SCRIPT language=Javascript>
+       
+       function isNumberKey(evt)
+       {
+       	  
+          var charCode = (evt.which) ? evt.which : event.keyCode;
+          if (charCode != 46 && charCode > 31 
+            && (charCode < 48 || charCode > 57))
+             return false;
+
+          return true;
+       }
+       
+    </SCRIPT>
+    <script>
+	function form_check()
+	{
+	if(document.getElementById('hours').value=="")
+	{
+		alert("Hours can't be blank.")
+		return false;
+	}
+	return true;
+	}
+
+</script>
+	
+
+</head>
+
+<body style="margin:0; padding:0; font-family:arial;">
+<div class="admin-left-sidebar">
+        	<ul>
+            <li><a>Dashboard</a></li>            
+            <li class="dashboard-active" ><a href="/progazer/addtimesheet/"> Add Timesheet </a></li>
+            <li><a href="/progazer/leave_application/">Add Leave</a></li>
+            {% if user_status == '1' %}
+			<li><a href="/progazer/viewtimesheet/"> View Timesheet </a></li>
+			<li><a href="/progazer/assign_project/"> Assign Project  </a></li>
+			<li><a href="/progazer/re_assign_project/"> Re-assign Project  </a></li>
+			<li><a href="/progazer/addproject/"> Add Project </a></li>
+			<li><a href="/progazer/view_project/"> View Project </a></li>
+			<li><a href="/progazer/addclient/"> Add Client </a></li>
+			<li><a href="/progazer/view_client/"> View Client </a></li>
+			<li><a href="/admin/"> View Database </a></li> 
+			{% else %}
+            {% if user_status == '2' %}
+            <li><a href="/progazer/viewtimesheet/"> View Timesheet </a></li>
+            {% endif %}
+            {% endif %}
+            </ul>
+        </div>
+        
+        
+        <div class="admin-right-sidebar">
+            
+       		<form method="post" action="." >{%csrf_token%}
+	 <div class="time-heading">
+             	<div class="time-picker-head">
+		     		<h1>Records for Date:		     	<div class="time-picker">
+    			<input type="text" class="datepicker6" value="{{selected_date}}" name="date" id="date1" readonly="true" onchange="send_date()" />
+    		</div><h2> {{message}} </h2>
+		     	</div>
+
+		     	
+		     	</h1>
+		     </div>
+			
+	
+	<div class="table-grid">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <th scope="col">Project</th>
+                    <th scope="col">Activity</th>
+                    <th scope="col">Hours</th>
+                    <th scope="col">Comments</th>
+                    <th scope="col">Status</th>
+                  </tr>
+                  {% for records in record_date %}
+                  <input type="hidden"  name="record_id" value="{{records.id}}">
+                  <tr>
+	                  <td>{{ records.project }}</td>
+	                  <td>{{ records.module }}</td>
+	                  <td>{{ records.hours }}</td>
+	                  <td>{{ records.comments }}</td>
+	                  <td><input type="submit" title="Edit" style="background:url({{STATIC_URL}}/images/edit.jpg) no-repeat; border:0; cursor:pointer; width:22px; height:24px; float:left; padding: 11px;" value="" name="edit"/>
+	                  	<input type="submit" title="Submit" style="background:url({{STATIC_URL}}/images/submit.png) no-repeat; border:0; cursor:pointer; width:22px; float:left; height:24px; margin:0px 0 0 8px; " name="submit_record" value="" onclick="return confirmAction()">
+	                  </td>
+                  </tr>
+                  {% endfor %}
+                  {% for submitted in ts_date %}
+                  <tr>
+                  
+	                  <td>{{ submitted.project }}</td>
+	                  <td>{{ submitted.module }}</td>
+	                  <td>{{ submitted.hours }}</td>
+	                  <td>{{ submitted.comments }}</td>
+	                  {% if submitted.approved == 0 %}
+	                  <td>Pending</td>
+	                  {% else %}
+	                  <td>Approved</td>
+	                  {% endif %}
+                  </tr>
+                  {% endfor %}
+                  <tr>
+                  <input type="hidden" name="firstname" value= "{{ name.id }}" readonly="true"/>
+                  <input type="hidden" name="record_update_id" value="{{ obj.id }}">
+                  <td>
+                   <input type="text" class="hour-input-project" value="{{obj.project}}" readonly="True"/></td>
+                  <td><input type="text" class="hour-input-project" value="{{obj.module}}"  readonly="True"/></td>
+                  <td><input type="text" class="hour-input" id="hours" name="hours" value="{{obj.hours}}" onkeypress="return isNumberKey(event)" maxlength="5"/></td>
+                  <td><textarea class="comment-textarea" name="comments" >{{obj.comments}}</textarea></td>
+                  <td><input type="submit" class="emp-button" name="update" value="Update" onclick="return form_check()" ></td>
+                  </tr>
+                  <tr>
+                  <td><b>Total Hours</b></td>
+                  <td></td>
+                  <td><b>{{ timespent.hours__sum }}</b></td>
+                  <td></td>
+                  <td></td>
+                  </tr>
+                  </table>
+                  </div>
+				
+
+   </div>
+
+<div class="emp-login-logo"></div>
+</body>
+</html>
+{% endblock %}

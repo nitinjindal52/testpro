@@ -1,0 +1,38 @@
+
+{% extends "admin_home.html" %}
+{% block ss %}
+<title>Progazer | Employee Uploader</title>
+<div class="admin-left-sidebar">
+        	<ul>
+			<li ><a href="/progazer/login/">Dashboard</a></li>            
+            <li ><a href="/progazer/employee/"> Add Employee </a></li>
+            <li ><a href="/progazer/view_employee/"> View Employee </a></li>
+            <li><a href="/progazer/leave_application/">Add Leave</a></li>
+			<li><a href="/progazer/leave_register_hr/">Leave Register</a></li>
+			<li><a href="/progazer/optional_holiday/">Optional Holidays</a></li>
+			<li ><a href="/progazer/attendence/">Upload Attendence</a></li>
+			<li  ><a href="/progazer/view_attendence_emp/">Employee Attendence</a></li>
+			<li><a href="/progazer/view_attendence_date/">Date Attendence </a></li>
+			<li><a href="/progazer/manage_hr/">HR Group </a></li>
+			<li><a href="/progazer/manage_att_uploader/">Attendence Uploader Group</a></li>
+			<li class="dashboard-active"><a href="/progazer/employee_upload/">Employee Uploader </a></li>
+			</ul>
+			
+</div>
+	<div class="admin-right-sidebar">
+	
+	
+	<form method="post" action="." enctype="multipart/form-data" >{%csrf_token%}
+	
+	<div class="emp-input-wrapper">{{form.dd}}</div>
+	<input type="submit" value="Upload"/>
+	</form>
+	<div class="add-emp-label">Errors:</div>
+				<div class="emp-input-wrapper">
+					<textarea class="emp-textarea" name="skills">Duplicate entry for {{ error_list1}}  </textarea>
+				</div>
+				<div class="emp-input-wrapper">
+					<textarea class="emp-textarea" name="skills">Errors in saving employees {{ error_list2}}  </textarea>
+				</div>
+</div>
+{% endblock %}

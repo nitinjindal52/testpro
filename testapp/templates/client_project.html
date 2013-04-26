@@ -1,0 +1,6 @@
+ client project screen {{client.name}}{{client.company}}
+{% for projects in projects %}
+
+<li> <a href="/progazer/client_project_timesheets/{{projects.id}}/">{{projects.name}}</a></li>  
+ 
+{% endfor %}

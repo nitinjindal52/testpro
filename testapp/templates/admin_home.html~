@@ -1,0 +1,10 @@
+<div style="float:Right;">{{user}} <a href="http://127.0.0.1:8000/progazer/logout/"> Logout </a> </div>
+<li><a href="/progazer/addtimesheet/"> Add Timesheet </a></li>
+<li><a href="/progazer/viewtimesheet/"> View Timesheet </a></li>
+<li><a href="/progazer/assign_project/"> Assign Project  </a></li>
+
+<li><a href="/progazer/employee/"> Add Employee </a></li>
+<li><a href="/progazer/view_employee/"> View Employee </a></li>
+<li><a href="/progazer/addproject/"> Add Project </a></li>
+<li><a href="/progazer/addclient/"> Add client </a></li>
+<li><a href="http://127.0.0.1:8000/admin/"> View Database </a></li>

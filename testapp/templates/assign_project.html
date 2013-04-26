@@ -1,0 +1,137 @@
+{% extends "admin_home.html" %}
+
+{% block ss %}
+<title>Progazer | Assign Project </title>
+<script type="text/javascript">
+        function view_chart() {
+        				var project_id = document.getElementById('project').value;
+        				var department_id = document.getElementById('department').value;
+        				var unit_id = document.getElementById('unit').value;
+        				if(unit_id=="")
+        				{
+        				
+        				return false;
+        				}
+        				if(department_id=="")
+        				{
+        				
+        				return false;
+        				}
+        				if(project_id=="")
+        				{
+        				
+        				return false;
+        				}
+        				window.location = "/progazer/assign_projectt/"+project_id+"/"+department_id+"/"+unit_id+"/";
+        				
+        }
+</script>
+<body>
+<div class="admin-left-sidebar">
+        	<ul>
+            <li><a href="/progazer/login/">Dashboard</a></li>            
+            <li><a href="/progazer/addtimesheet/"> Add Timesheet </a></li>
+            <li><a href="/progazer/leave_application/">Add Leave</a></li>
+			<li><a href="/progazer/viewtimesheet/"> View Timesheet </a></li>
+			<li  class="dashboard-active" ><a href="/progazer/assign_project/"> Assign Project  </a></li>
+			<li><a href="/progazer/re_assign_project/"> Re-assign Project  </a></li>
+			<li><a href="/progazer/addproject/"> Add Project </a></li>
+			<li><a href="/progazer/view_project/"> View Project </a></li>
+			<li><a href="/progazer/addclient/"> Add Client </a></li>
+			<li><a href="/progazer/view_client/"> View Client </a></li>
+			<li><a href="/admin/"> View Database </a></li>                                
+            </ul>
+        </div>
+        
+        
+<div class="admin-right-sidebar">
+	
+		<div style="float:Left; padding:5px; font-family:arial; color:"#000"; >
+			<label style="padding:5px 3px; " > Project: </label>
+				<select class="emp-select" id="project" onchange="view_chart()">
+					{% if selected_project == "" %}
+					<option value="">Select Project</option>
+					{% else %}
+					<option value="{{selected_project.id}}">{{selected_project}}</option>
+					{% endif %}
+					{%for project in project %}
+						{% if project.id != selected_project.id %} 
+						<option value="{{project.id}}">{{project.name}}</option>
+						{% endif %}
+					{% endfor %}
+				</select>
+		</div>
+		<div style="float:left; margin:5px 0 0 186px; font-family:arial; color:"#000"; >
+			<label style="padding:5px 3px; " > Unit: </label>
+			<select class="emp-select" id="unit" onchange="view_chart()">
+				{% if selected_unit == "" %}
+				<option value="0">All</option>
+				{% else%}
+				<option value="{{selected_unit.id}}">{{selected_unit}}</option>
+				<option value="0">All</option>
+				{% endif %}
+				{%for unit in unit %}
+					{% if unit.id != selected_unit.id %} 
+					<option value="{{unit.id}}">{{unit.unit}}</option>
+					{% endif %}
+				{% endfor %}
+			</select>
+		</div>
+		<div style="float:Right; padding:5px; font-family:arial; color:"#000";" >
+		
+			<label style="padding:5px 3px;" > Department: </label>
+			<select class="emp-select"  id="department" onchange="view_chart()">
+			{% if selected_department == "" %}
+				<option value="0">All</option>
+				{% else%}
+				<option value="{{selected_department.id}}">{{selected_department}}</option>
+				<option value="0">All</option>
+				{% endif %}
+			
+			{%for department in department %}
+			{% if department.id != selected_department.id %}
+			 <option value="{{department.id}}">{{department.department}}</option>
+			 {% endif %}
+			 {% endfor %}
+			 </select>
+		</div>
+
+<div class="table-grid">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Designation</th>
+                    <th scope="col">Approver</th>
+                    <th scope="col">Assign</th>
+                  </tr>
+    {% for employee in employee_list %}
+    {% if employee.id not in x %}
+    <form method="post" action=".">{%csrf_token%}
+    <input type="hidden" name="employee_name" value="{{employee.id}}" />
+		
+                  <tr>
+                  
+                    <td>{{employee.id}}</td>
+                    <td>{{employee.firstname}} {{employee.lastname}} </td>
+                    <td>{{employee.designation}}</td>
+                    
+                    <td><input type="Checkbox" name="checkbox"/></td>
+                    <td><input type="submit" name="submit" value="Assign"></td>
+                  	
+                  	
+                  	</tr>
+                  	</form>
+			{% endif %}
+			
+			
+			
+		{% endfor %}
+                  </table>
+                  </div>
+                  </div>
+                  
+                  
+{% endblock %}
+</div>
+</body>

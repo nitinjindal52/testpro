@@ -1,0 +1,284 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Progazer | Leave Application </title>
+<link href="{{STATIC_URL}}style/stylesheet.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="{{STATIC_URL}}js/validatejs.js" ></script>
+<meta charset="utf-8" />
+<link href="{{STATIC_URL}}images/progazer_logo1.png" type="image/ico" rel="icon">
+			<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+			<script src="{{STATIC_URL}}js/jquery-1.8.3.js"></script>
+			
+			<script src="{{STATIC_URL}}js/jquery-ui.js"></script>
+			
+		<script type="text/javascript" src="{{STATIC_URL}}js/dd.js"></script>
+<!--<script type="text/javascript">
+	$(document).ready(function(){
+	$('select').ddslick({
+		width:200,
+		background:'url("{{STATIC_URL}}/images/text-bg.jpg") repeat-x scroll 0 0 transparent',
+		
+		onSelected: function(selectedData){
+	    	
+	        //callback function: do something with selectedData;
+	    }   
+	});});
+</script> -->
+		<script type="text/javascript">
+				$(function() {
+				$( ".datepicker" ).datepicker({
+				changeMonth: true,
+				changeYear: true,
+				yearRange: "2000:2099",
+				dateFormat: 'yy-mm-dd',
+				minDate: new Date()
+				});
+				});
+			</script>
+<script >
+function check()
+{
+	var startdatee = document.getElementById('startdate').value;
+	var enddatee = document.getElementById('enddate').value;
+	if(startdatee==enddatee){
+	
+	document.getElementById('leave_choices').disabled=false;
+	return true;
+	}
+	document.getElementById('leave_choices').value='3';
+	document.getElementById('leave_choices').disabled=true;
+	return true;
+}
+</script>
+<script>
+	function form_check()
+	{
+	if( document.getElementById('startdate').value=="")
+	{
+		alert("Fill Start Date")
+		return false;
+	}
+	if( document.getElementById('enddate').value=="")
+	{
+		alert("Fill End Date")
+		return false;
+	}
+	if(document.getElementById('leavetype').value=="")
+	{
+		alert("Select Leave Type")
+		return false;
+	}
+	return true;
+	}
+</script>
+<script>
+	function leave_types()
+	{
+	var start_date=document.getElementById('startdate');
+	var end_date=document.getElementById('enddate');
+	
+	if(document.getElementById('leavetype').value=="3")
+	{
+	document.getElementById('optional_holidays').disabled=false;
+	document.getElementById('leave_choices').value='3';
+	document.getElementById('leave_choices').disabled=true;
+	start_date.setAttribute('type','hidden');
+	start_date.setAttribute('label','ss');
+	
+	end_date.setAttribute('type','hidden');
+	return true;
+	}
+	if(document.getElementById('leavetype').value=="4")
+	{
+	}
+	document.getElementById('optional_holidays').disabled=true;
+	start_date.setAttribute('type','text');
+	end_date.setAttribute('type','text');
+	return true;
+	}
+</script>
+<script>	
+	function opt_holid()
+		{
+		var start_date=document.getElementById('startdate');
+		var end_date=document.getElementById('enddate');
+		start_date.setAttribute('value',document.getElementById('optional_holidays').value);
+		end_date.setAttribute('value',document.getElementById('optional_holidays').value);
+		}
+</script>
+
+<script>
+var x={{popup}}
+if(x=='1'){
+ 
+alert("Your Application ID is: {{application_id}}")
+
+}
+
+</script>
+
+
+<body style="margin:0; padding:0; font-family:arial;">
+<body style="margin:0; padding:0; font-family:arial;">
+<div class="header">
+	
+		<div class="logo"><img src="{{STATIC_URL}}images/logo.png" width="157" height="35" alt="logo" /></div>
+        <div class="logo-right">
+        	<div class="login-user">
+        		<div class="login-user-22">
+            	Welcome <span>{{user_name}}</span>
+            	</div>
+            	<div class="account-setting"><a href="/progazer/change_password/">Password</a></div>
+            </div>
+        	<div class="logout-22"><a href="/progazer/logout/"> Logout</a> </div>
+        </div>
+    </div>
+
+   	<!--admin-content-wrap start here-->
+   <div class="admin-content-wrap">
+       
+{% if user_status == '3' %}
+			<div class="admin-left-sidebar">
+        	<ul>
+			<li ><a href="/progazer/login/">Dashboard</a></li>            
+            <li ><a href="/progazer/employee/"> Add Employee </a></li>
+            <li ><a href="/progazer/view_employee/"> View Employee </a></li>
+            <li  class="dashboard-active" ><a href="/progazer/leave_application/">Add Leave</a></li>
+			<li><a href="/progazer/leave_register_hr/">Leave Register</a></li>
+			<li><a href="/progazer/optional_holiday/">Optional Holidays</a></li>
+			<li><a href="/progazer/attendence/">Upload Attendence</a></li>
+			<li><a href="/progazer/view_attendence_emp/">Employee Attendence</a></li>
+			<li><a href="/progazer/view_attendence_date/">Date Attendence </a></li>
+			<li><a href="/progazer/manage_hr/">HR Group </a></li>
+			<li><a href="/progazer/manage_att_uploader/">Attendence Uploader Group</a></li>
+			<li><a href="/progazer/employee_upload/">Employee Uploader </a></li>
+			
+			</div>
+			{% else %}
+				<body style="margin:0; padding:0; font-family:arial;">
+			<div class="admin-left-sidebar">
+        	<ul>
+            <li ><a href="/progazer/login/">Dashboard</a></li>            
+            <li ><a href="/progazer/addtimesheet/"> Add Timesheet </a></li>
+            <li  class="dashboard-active"><a href="/progazer/leave_application/">Add Leave</a></li>
+            {% if user_status == '1' %}
+			<li><a href="/progazer/viewtimesheet/"> View Timesheet </a></li>
+			<li><a href="/progazer/assign_project/"> Assign Project  </a></li>
+			<li><a href="/progazer/re_assign_project/"> Re-assign Project  </a></li>
+			<li><a href="/progazer/addproject/"> Add Project </a></li>
+			<li><a href="/progazer/view_project/"> View Project </a></li>
+			<li><a href="/progazer/addclient/"> Add Client </a></li>
+			<li><a href="/progazer/view_client/"> View Client </a></li>
+			<li><a href="/admin/"> View Database </a></li> 
+			{% else %}
+            {% if user_status == '2' %}
+            <li><a href="/progazer/viewtimesheet/"> View Timesheet </a></li>
+            {% endif %}
+            {% endif %}
+            </ul>
+        </div>
+        
+        
+        
+					
+			{% endif %}
+			<div class="admin-right-sidebar">
+ 
+<div class="main-bg">
+<!--emp-login-wrappe start here-->
+<div id="add-emp-wrapper">
+	<div class="emp-login-logo"></div>
+   <!--emp-login-container start here-->
+   <form method="post" action=".">{%csrf_token%}
+    <div class="add-project-container">
+	        	<div class="emp-right-heading">
+        		<h2>Leave Application</h2>
+            </div>
+        <div class="add-emp-content">
+			<div class="emp-left-wrapper">
+				
+				<div class="add-emp-label">Name:</div>
+				<div class="emp-input-wrapper">
+				<input type="text" class="emp-input" value="{{employee_name}}" readonly="True" />
+				
+				</div> 
+				<div class="add-emp-label">Leave Type:</div>
+				<div class="emp-input-wrapper">
+					<select name="leave_type" id="leavetype" class="emp-select" onchange="return leave_types()">
+						<option {{form.leave_type}}</option>
+					</select>				
+					<div class="error-msg" >
+					{{ form.leave_type.errors }}
+				</div>
+				</div> 			
+								
+				<div class="add-emp-label">Start Date:</div>
+				<div class="emp-input-wrapper">
+				<input type="text" id="startdate" name="start_date" class="datepicker" readonly="True" onchange="return check()"/>
+				</div>
+				<div class="add-emp-label">Optional Holidays:</div>
+				<div class="emp-input-wrapper">
+				<select class="emp-select" id="optional_holidays" onchange="opt_holid()" disabled="true">
+				{% for optional in optional %}
+				<option value="{{optional.date|date:"20y-m-d"}}">{{optional.date}}( {{optional.name}} )</option>
+				{% endfor %}
+				</select>
+				</div>
+				
+			</div> 
+
+			<div class="emp-right-wrapper">
+			
+				<div class="add-emp-label">Application Date:</div>
+				<div class="emp-input-wrapper">
+				<input type="text" class="emp-input" value="{{application_date}}" readonly="True" />
+				<div class="error-msg" >
+					
+				</div>
+				</div> 	
+				<div class="add-emp-label">Choices:</div>
+				<div class="emp-input-wrapper">
+				<select id="leave_choices" class="emp-select" name="choices" >
+					<option value="3">Full Day</option>
+					<option Value="1">Morning</option>
+					<option value="2">Evening</option>
+                            </select>
+                </div> 	
+				<div class="add-emp-label">End Date:</div>
+				<div class="emp-input-wrapper">
+				<input type="text" id="enddate" name="end_date" class="datepicker" readonly="True" onchange="return check()"/>
+				<div class="error-msg">
+										{{ form.enddate.errors }}
+										</div>
+				</div>
+				
+								
+                                         
+			</div> 		
+				<div class="add-emp-label">Remarks:</div>
+				<div class="emp-input-wrapper">
+					<textarea class="emp-textarea" name="remarks"></textarea>
+					<div class="error-msg" >
+										{{ form.remarks.errors }}
+										</div>
+				</div>
+				<div class="emp-input-wrapper">
+					<input type="submit" value="Submit" class="emp-button" onclick="return form_check()" />
+					
+				</div>				
+	</div>		
+    </div>
+    </form>
+    <!--emp-login-container end here-->
+</div>
+<!--emp-login-wrappe end here-->
+</div>
+</div>
+<div class="emp-login-logo"></div>
+<div class="footer">
+	<div class="browser-center">
+    &copy; 2013 by progazer.com
+    </div>
+</div>
+</body>
+</html>

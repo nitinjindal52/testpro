@@ -1,0 +1,112 @@
+{% extends "admin/timesheet_extend.html" %}
+			{% block ss %}
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Progazer | Add Project </title>
+		<link href="{{ STATIC_URL }}style/stylesheet.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="{{STATIC_URL}}js/jquery-1.8.2.min.js" ></script>
+		<script type="text/javascript" src="{{STATIC_URL}}js/validatejs.js" ></script>
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+		<script src="{{STATIC_URL}}js/jquery-ui.js"></script>
+		<link rel="stylesheet" href="/resources/demos/style.css" />
+		
+			<script>
+				$(function() {
+				$( ".datepicker" ).datepicker({
+				changeMonth: true,
+				changeYear: true,
+				yearRange: "2000:2099"
+				});
+				});
+			</script>
+			
+			<title>Progazer | Edit Project </title>
+			<script>
+	function checkform(){
+		
+		var a = document.getElementById('a').value;
+		if (a=="")
+		{
+		alert("Fill Mandatory Fields")
+		return false;
+		}
+		return true;
+		}
+	</script>
+			<div class="admin-left-sidebar">
+        	<ul>
+            <li><a href="/progazer/login/">Dashboard</a></li>            
+            <li><a href="/progazer/addtimesheet/"> Add Timesheet </a></li>
+            <li><a href="/progazer/leave_application/">Add Leave</a></li>
+			<li><a href="/progazer/viewtimesheet/"> View Timesheet </a></li>
+			<li><a href="/progazer/assign_project/"> Assign Project  </a></li>
+			<li><a href="/progazer/re_assign_project/"> Re-assign Project  </a></li>
+			<li><a href="/progazer/addproject/"> Add Project </a></li>
+			<li class="dashboard-active" ><a href="/progazer/view_project/"> View Project </a></li>
+			<li><a href="/progazer/addclient/"> Add Client </a></li>
+			<li><a href="/progazer/view_client/"> View Client </a></li>
+			<li><a href="/admin/"> View Database </a></li>                                
+            </ul>
+        </div>
+        
+        
+        <div class="admin-right-sidebar">
+				<div class="main-bg">
+					<div id="add-emp-wrapper">
+						{% load staticfiles %}
+						<div class="emp-login-logo"></div>
+						<div class="add-project-container">
+							<div class="emp-right-heading">
+								<h2>Edit Project</h2>
+							</div>
+							<form method="post" action=".">{%csrf_token%}
+							
+							<div class="add-emp-content">
+								<div class="emp-left-wrapper">
+									<div class="add-emp-label">Project Name:</div>
+									<div class="emp-input-wrapper">
+										
+										<input type="text" class="emp-input" readonly="true" value="{{project.name}}" />
+									
+									</div>
+									<div class="add-emp-label">Type:</div>
+									<div class="emp-input-wrapper">
+										<input type="text" class="emp-input" readonly="true" value="{{project.type}}" />
+									</div>
+									<div class="add-emp-label">Client:</div>
+									<div class="emp-input-wrapper">
+										<input type="text" class="emp-input" readonly="true" value="{{project.client}}" />
+									</div>
+								</div>
+								
+								<div class="emp-right-wrapper">											
+									<div class="add-emp-label">Start Date:</div>
+									<div class="emp-input-wrapper">		
+										<input type="text" name="startdate" class="datepicker" readonly="true" value="{{project.startdate|date:"20y-m-d"}}" />
+									</div>
+									<div class="add-emp-label">Status:*</div>
+									<div class="emp-input-wrapper">		
+										<select class="emp-select" name="status" id="a">
+										<option
+										{{ form.status }}
+										</select>
+									</div>	
+									<div class="add-emp-label"><label style="color:white">a </label></div>
+									<div class="emp-input-wrapper">	
+										<input type="submit" value="Update" class="emp-button" onclick="return checkform()"/>
+									</div>
+								</div>  
+							</div>  
+							</form>
+						</div>
+					</div>
+				</div>										
+					
+			{% endblock %}
+	</head>
+<html>
+

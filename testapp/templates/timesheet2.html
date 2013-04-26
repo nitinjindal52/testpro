@@ -1,0 +1,261 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="{{ STATIC_URL }}style/stylesheet.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Progazer | Add Timesheet </title>
+		<script type="text/javascript" src="{{STATIC_URL}}js/jquery-1.8.2.min.js" ></script>
+		<script type="text/javascript" src="{{STATIC_URL}}js/validatejs.js" ></script>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="{{ STATIC_URL }}style/jquery-ui.css" />
+		<script src="{{ STATIC_URL }}js/jquery-1.8.3.js"></script>
+		<script src="{{ STATIC_URL }}js/jquery-ui.js"></script>
+		<link rel="stylesheet" href="/resources/demos/style.css" />
+		<link href="{{STATIC_URL}}style/jquery.selectbox_timesheet.css" type="text/css" rel="stylesheet" />
+		<script type="text/javascript" src="{{STATIC_URL}}js/jquery.selectbox-0.2.js"></script>
+		<script type="text/javascript">
+		$(function () {
+			$(".emp-select-9").selectbox();
+		});
+		</script>
+		<script>
+			$(function() {
+			$( ".datepicker" ).datepicker({
+			changeMonth: true,
+			changeYear: true,
+			yearRange: "2000:2099",
+			minDate: -10,
+			maxDate: new Date(),
+			dateFormat: 'yy-mm-dd'
+			});
+			});
+		</script>
+		<SCRIPT language=Javascript>
+       
+       function isNumberKey(evt)
+       {
+       	  var date = document.getElementById('date1').value;
+       	  if(date==""){
+       	  alert("set date first")
+       	  return false;
+       	  }
+          var charCode = (evt.which) ? evt.which : event.keyCode;
+          if (charCode != 46 && charCode > 31 
+            && (charCode < 48 || charCode > 57))
+             return false;
+
+          return true;
+       }
+       
+    </SCRIPT>
+		<script LANGUAGE="JavaScript">
+		function send_date() {
+								
+							var date = document.getElementById('date1').value;
+							
+							$.ajax({
+									type: 'GET',
+									url: '/progazer/addtimesheet/',
+									data: {'date':date},
+									success: function(){window.location = "/progazer/addtimesheett/"+date+"/";},
+									
+									});
+							}
+		</script>
+		<script>
+			
+			$(function() {
+			$( ".datepicker1" ).datepicker({
+			Date: function(input, instance) { 
+            $(input).datepicker('setDate', new Date());
+        	}
+				
+			});
+			});
+		</script>
+		<SCRIPT LANGUAGE="JavaScript">
+			function checkform()
+			{
+						  var date = document.getElementById('date1').value;
+			      		  if(date==""){
+			       		  alert("set date first")
+			       		  return false;
+			       		  }
+			}
+		</script>
+		<SCRIPT LANGUAGE="JavaScript">
+				      function confirmAction() {
+			      		var date = document.getElementById('date1').value;
+			      		  if(date==""){
+			       		  alert("set date first")
+			       		  return false;
+	       	  			}
+		        return confirm("{{name.firstname }}, Do you really want to submit?")
+		      }
+		</SCRIPT>
+	
+{%block content%}
+
+
+<div id="header">
+	<div class="browser-center">
+	<div id="header-inner">
+		<div class="logo"><a href="/progazer/login/"><img src="{{ STATIC_URL }}images/logo.png" alt="logo" border="0" /></a></div>
+        <div class="user">
+        <div class="user-login"><h1>Hi, <span>{{ user_name }}</span></h1></div>
+        <div class="logout-setting">
+				<div class="logout"><a href="/progazer/logout/"><img src="{{ STATIC_URL }}images/logout.jpg" alt="logout" border="0" /></a></div>
+				 <div class="setting"><a href="/progazer/change_password/"><img src="{{ STATIC_URL }}images/setting.jpg" alt="logout" border="0" /></a></div>
+		 </div>
+        </div>
+		</div>
+    </div>
+</div>
+
+<!--header start here-->
+
+
+<div id="banner">
+<div class="browser-center">
+<div id="banner-wrap">
+
+<div id="banner-images">
+	<div class="block">
+	<div class="block-heading">Dashboard</div>
+	<div class="block-image">
+	<img src="{{ STATIC_URL }}images/dashboard.jpg" alt=""/></div>
+	</div>
+	
+	<div class="block">
+<div class="block-heading">timesheet</div>
+<div class="block-image">
+<img src="{{ STATIC_URL }}images/Timesheet.jpg" alt=""/></div>
+</div>
+
+	<div class="block">
+<div class="block-heading">task</div>
+<div class="block-image">
+<img src="{{ STATIC_URL }}images/Task.jpg" alt=""/></div>
+</div>
+
+<div class="block">
+<div class="block-heading">Discuss</div>
+<div class="block-image">
+<img src="{{ STATIC_URL }}images/Discuss.jpg" alt=""/></div>
+</div>
+
+<div class="block">
+<div class="block-heading">Risk</div>
+<div class="block-image">
+<img src="{{ STATIC_URL }}images/Risk.jpg" alt=""/></div>
+</div>
+
+<div class="block">
+<div class="block-heading">issues</div>
+<div class="block-image">
+<img src="{{ STATIC_URL }}images/Issues.jpg" alt=""/></div>
+</div>
+
+<div class="block">
+<div class="block-heading">Leave</div>
+<div class="block-image">
+<a href="/progazer/leave_application/"><img src="{{ STATIC_URL }}images/Info.jpg" alt=""/></a></div>
+</div>
+
+<div class="block">
+<div class="block-heading">password</div>
+<div class="block-image">
+<a href="/progazer/change_password/"><img src="{{ STATIC_URL }}images/Changes.jpg" alt=""/></a></div>
+</div>
+<form method="post" action="." >{%csrf_token%}
+<div class="block">
+<div class="block-heading">Set Date</div>
+<div class="block-image-1"><input type="text" class="datepicker" value="{{selected_date}}" name="date" id="date1" readonly="true" onchange="send_date()" />
+</div>
+</div>
+</div>
+
+</div>
+</div>
+{% endblock %}
+
+<!--timesheet-wrap start here-->
+<div id="timesheet-wrap">
+	<div class="submit-form"><h1>Records for Date:{{selected_date}}<div style="font-family:arial; color:red"> {{message}} </div></h1></div>
+	<div class="timesheet-table">
+		<div class="timesheet-table-heading-blank">
+			<div class="add-blank1"></div>
+			<div class="add-blank">Project </div>
+			<div class="activity"> Module</div>
+			<div class="role-1"> </div>
+			<div class="hours">Hours</div>
+			<div class="date">Comments</div>
+			<div class="comment"></div>
+	</div>
+		
+		{% for records in record_date %}
+		<div class="timesheet-table-tr">
+		<div class="add-blank1"></div>
+			<div class="add-1">{{ records.project }} </div>
+			<div class="activity-1">{{ records.module }}</div>
+			<div class="role-1"></div>
+			<div class="hours-1">{{ records.hours }}</div>
+			<div class="date-1">{{ records.comments }}</div>
+			<div class="comment-1"> <input type="hidden"  name="record_id" value="{{records.id}}"><input type="submit" style="background:url({{STATIC_URL}}/images/edit.jpg); width:26px; height:26px; padding: 11px;" value="" name="edit"/></div>
+			<div class="action-1"><input type="submit" style="background:url({{STATIC_URL}}/images/submit.jpg); width:26px; height:26px; " name="submit_record" value="" onclick="return confirmAction()"></div>
+		</div>	
+	  	{% endfor %}
+		{% for submitted in ts_date %}
+		<div class="timesheet-table-tr">
+		<div class="add-blank1"></div>
+			<div class="add-1">{{ submitted.project }} </div>
+			<div class="activity-1">{{ submitted.module }}</div>
+			<div class="role-1"></div>
+			<div class="hours-1">{{ submitted.hours }}</div>
+			<div class="date-1">{{ submitted.comments }}</div>
+		</div>	
+	  	{% endfor %}
+		
+	</div>
+	
+	
+	<div class="main-form">
+		<input type="hidden" name="firstname" value= "{{ name.id }}" readonly="true"/>
+	<div class="timesheet-table-heading-blank-9">
+			<div class="add-blank1"></div>
+			<div class="add-blank"> <select name="project" class="emp-select-9">
+										{% for entry in project %}
+   										 <option value="{{ entry.project_id }}">{{ entry.project }}</option>
+											{% endfor %}
+													</select></div>
+			<div class="activity"><select name="module" class="emp-select-9">
+										{% for entrye in modules %}
+   										 <option value="{{ entrye.id }}">{{ entrye.module }}</option>
+											{% endfor %}
+													</select></div>
+			<div class="role-1"></div>
+			<div class="hours"><input type="text" class="hour-input" name="hours" onkeypress="return isNumberKey(event)" maxlength="5"/></div>
+			<div class="date"><textarea class="comment-textarea" name="comments" onkeypress="return checkform()"></textarea></div>
+				
+</div>
+	
+			<div class="from-input-wrapper">
+				<input type="submit" class="emp-button-7" name="save" value="Save" onclick="return checkform()">
+				<input type="submit" class="emp-button-7" name="submit" value="Submit" onclick="return confirmAction()">
+			</div>			
+	</div>
+	</form>
+	<div class="timesheet-table-tr">
+	<div class="add-blank1"></div>
+			<div class="add-1">Total Hours </div>
+			<div class="activity-1"></div>
+			<div class="role-1"></div>
+			<div class="hours-1">{{ timespent.hours__sum }}</div>
+		<div>
+</div>
+<!--timesheet-wrap end here-->
+</body>
+</html>

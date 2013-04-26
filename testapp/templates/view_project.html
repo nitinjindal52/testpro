@@ -1,0 +1,54 @@
+{% extends "admin_home.html" %}
+
+<body style="margin:0; padding:0; font-family:arial;">
+{%block ss %}
+<title>Progazer | View Project </title>
+<div class="admin-left-sidebar">
+        	<ul>
+            <li><a href="/progazer/login/">Dashboard</a></li>            
+            <li><a href="/progazer/addtimesheet/"> Add Timesheet </a></li>
+            <li><a href="/progazer/leave_application/">Add Leave</a></li>
+			<li><a href="/progazer/viewtimesheet/"> View Timesheet </a></li>
+			<li><a href="/progazer/assign_project/"> Assign Project  </a></li>
+			<li><a href="/progazer/re_assign_project/"> Re-assign Project  </a></li>
+			<li><a href="/progazer/addproject/"> Add Project </a></li>
+			<li class="dashboard-active"><a href="/progazer/view_project/"> View Project </a></li>
+			<li><a href="/progazer/addclient/"> Add Client </a></li>
+			<li><a href="/progazer/view_client/"> View Client </a></li>
+			<li><a href="/admin/"> View Database </a></li>                                
+            </ul>
+        </div>
+        
+        
+        <div class="admin-right-sidebar">
+<div class="table-heading-1"><h1>Project Records:</h1></div>
+<div class="table-grid">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Project</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">Client</th>
+                    <th scope="col">Type</th>
+                  </tr>
+  					
+  	{% for project in project %}
+  					
+  					<tr onclick="document.location='/progazer/view_projectid/{{ project.id }}/';" >
+                    <td>{{project.id}}</td>
+                    <td>{{project.name}}</td>
+                    <td>{{project.startdate}}</td>
+                    <td>{{project.client}}</td>
+                    <td>{{project.type}}</td>
+                  	</tr>   
+                  	               
+       {% endfor %}           
+                  
+				</table>
+				</div>
+
+	  	
+	  	</div> 
+	  	{% endblock %}
+	  	</div>
+</body>

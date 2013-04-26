@@ -1,0 +1,98 @@
+{% extends 'admin_home.html' %}
+{% block ss %}
+<script>
+var x={{pop}}
+				if(x=='1'){
+				alert("Employee has not registered as user yet.")
+				}
+</script>
+<title>Progazer | Manage HR Group </title>
+
+	<div class="admin-left-sidebar">
+        	<ul>
+			<li ><a href="/progazer/login/">Dashboard</a></li>            
+            <li ><a href="/progazer/employee/"> Add Employee </a></li>
+            <li ><a href="/progazer/view_employee/"> View Employee </a></li>
+            <li><a href="/progazer/leave_application/">Add Leave</a></li>
+			<li><a href="/progazer/leave_register_hr/">Leave Register</a></li>
+			<li><a href="/progazer/optional_holiday/">Optional Holidays</a></li>
+			<li><a href="/progazer/attendence/">Upload Attendence</a></li>
+			<li><a href="/progazer/view_attendence_emp/">Employee Attendence</a></li>
+			<li><a href="/progazer/view_attendence_date/">Date Attendence </a></li>
+			<li  class="dashboard-active"><a href="/progazer/manage_hr/">HR Group </a></li>
+			<li><a href="/progazer/manage_att_uploader/">Attendence Uploader Group</a></li>
+			<li><a href="/progazer/employee_upload/">Employee Uploader </a></li>
+			
+			</ul>
+			</div>
+			<div class="admin-right-sidebar">
+			
+				<div class="table-heading-1"><h1>Current Users :</h1></div>
+	    		<div class="table-grid">
+	                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+	                  <tr>
+	                    <th scope="col">ID</th>
+	                    <th scope="col">Name</th>
+	                    <th scope="col">Unit</th>
+	                    <th scope="col">Designation</th>
+	                    <th scope="col">Department</th>
+	                    <th scope="col">Status</th>
+	                    </tr>
+	                    {% for emp in employee_list %}
+	                   
+	                    	
+	                    		{% if emp.email in hr_user %}
+	                    		<form method="post" action=".">{%csrf_token%}
+	                    		<tr>
+	                    		 <input type="hidden" value="{{emp.email}}" name="e_user" />
+		                    	<td>{{emp.id}}</td>
+		                    	<td>{{emp.firstname}} {{emp.lastname}}</td>
+		                    	<td>{{emp.unit}}</td>
+		                    	<td>{{emp.designation}}</td>
+		                    	<td>{{emp.department}}</td>
+		                    	
+		                    	<td><input type="submit" value="Remove" name="remove"/></td>
+		                    	</tr>
+		                    	</form>
+		                    	{% endif %}
+		                 {% endfor %}
+		                 
+	                    </table>
+	                    </div>
+	                    <div class="table-heading-1"><h1>Add Users :</h1></div>
+	    		<div class="table-grid">
+	                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+	                  <tr>
+	                    <th scope="col">ID</th>
+	                    <th scope="col">Name</th>
+	                    <th scope="col">Unit</th>
+	                    <th scope="col">Designation</th>
+	                    <th scope="col">Department</th>
+	                    <th scope="col">Status</th>
+	                    </tr>
+	                    {% for emp in employee_list %}
+	                    	
+	                    		{% if emp.email not in hr_user %}
+	                    		<form method="post" action=".">{%csrf_token%}
+	                    		<input type="hidden" value="{{emp.email}}" name="e_user" />
+	                    		<tr>
+	                    		
+	                    		
+		                    	<td>{{emp.id}}</td>
+		                    	<td>{{emp.firstname}} {{emp.lastname}}</td>
+		                    	<td>{{emp.unit}}</td>
+		                    	<td>{{emp.designation}}</td>
+		                    	<td>{{emp.department}}</td>
+		                    	
+		                    	<td><input type="submit" value="Add" name="add"/></td>
+		                    	</tr>
+		                    	</form>
+		                    	{% endif %}
+		                    
+		                 {% endfor %}
+		                 
+	                    </table>
+	                    </div>
+	                    
+			</div>
+{% endblock %}

@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Progazer | Employee Login </title>
+<link href="{{ STATIC_URL }}style/stylesheet.css" rel="stylesheet" type="text/css" />
+ <link href="{{STATIC_URL}}images/progazer_logo1.png" type="image/ico" rel="icon">
+<script type="text/javascript" src="{{STATIC_URL}}js/jquery-1.8.2.min.js" ></script>
+<script type="text/javascript" src="{{STATIC_URL}}js/validatejs.js" ></script>
+<!--<script type="text/javascript" src="{{STATIC_URL}}js/common.js" ></script>-->
+<script>
+  $(document).ready(function(){
+    $("#commentForm").validate();
+  });
+  </script>
+<script>
+var x={{popup}}
+
+if(x=='3'){
+alert("Application Approved")
+
+}
+
+</script>
+</head>
+<body>
+{%block content%}
+<!--emp-login-wrappe start here-->
+<div id="emp-login-wrapper">
+	<div class="emp-login-logo">
+	{% load staticfiles %}
+	<img src="{{STATIC_URL}}images/logo.png" width="215" height="49" alt="logo" /></div>
+   <!--emp-login-container start here-->
+   <form id="commentForm" method="post" action=".">{%csrf_token%}
+    <div class="emp-login-container">
+    	<div class="emp-left">
+        	<div class="emp-right-heading">
+        		<h1>Employee Login</h1>
+            </div>
+            <div class="emp-login-icon"></div>
+        </div>
+         
+        <div class="emp-right">
+        	<div class="emp-right-text-wrapper">
+            	<input type="text" value="username" class="text required email" onblur="if (this.value == '') {this.value = 'username';}" onfocus="if(this.value == 'username') {this.value = ''}" name="username" />
+            </div>
+        	
+            <div class="emp-right-text-wrapper">
+            	<input type="password" value="password" class="text" onblur="if (this.value == '') {this.value = 'password';}" onfocus="if(this.value == 'password') {this.value = ''}" name="password" />
+            </div>  
+{% if invalid %} 
+             <div class="error-msg" >
+    Invalid username/password  
+</div>   
+{% endif %} 
+            <div class="emp-right-check-wrapper">
+            	<input type="image" name="submit" src="{{STATIC_URL}}images/login-button.jpg" />
+            </div>           
+        	<div class="emp-right-text-wrapper">
+            	Forgot Password? <a href="/progazer/forgotpassword/">Click here</a>
+            	<br>
+            	New User? <a href="/progazer/generate_password/">Click here</a>
+            </div>                                                
+        </div>    
+    </div>
+    </form>
+    <!--emp-login-container end here-->
+</div>
+<!--emp-login-wrappe end here-->
+</body>
+{%endblock%}
+</html>

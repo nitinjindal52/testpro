@@ -1,0 +1,79 @@
+{% extends "admin_home.html" %}
+{% block ss %}
+<title>Progazer | View Timesheets </title>
+<script LANGUAGE="JavaScript">
+		function send_project() {
+								
+							var project = document.getElementById('option1').value;
+							window.location = "/progazer/viewtimesheetts/"+project+"/";
+							$.ajax({
+									type: 'GET',
+									url: '/progazer/viewtimesheetts/',
+									data: {'date':date},
+									success: function(){},
+									});
+							}
+		</script>
+<body style="margin:0; padding:0; font-family:arial;">
+<div class="admin-left-sidebar">
+        	<ul>
+            <li><a href="/progazer/login/">Dashboard</a></li>            
+            <li><a href="/progazer/addtimesheet/"> Add Timesheet </a></li>
+            <li><a href="/progazer/leave_application/">Add Leave</a></li>
+			<li  class="dashboard-active" ><a href="/progazer/viewtimesheet/"> View Timesheet </a></li>
+			{% if user_status == '1' %}
+			<li><a href="/progazer/assign_project/"> Assign Project  </a></li>
+			<li><a href="/progazer/re_assign_project/"> Re-assign Project  </a></li>
+			<li><a href="/progazer/addproject/"> Add Project </a></li>
+			<li><a href="/progazer/view_project/"> View Project </a></li>
+			<li><a href="/progazer/addclient/"> Add Client </a></li>
+			<li><a href="/progazer/view_client/"> View Client </a></li>
+			<li><a href="/admin/"> View Database </a></li>   
+			{% endif %}                             
+            </ul>
+</div>
+<div class="admin-right-sidebar">
+	<div style="float:Left; padding:5px">
+		
+			<label style="font-family:arial;line-height: 32px; padding:5px; color:black;"> Project: </label>
+			<select name="project" class="emp-select" onChange="send_project()" id="option1">
+				<option value="{{project_id}}">{{project}}</option>
+				{% for entry in assigned_project %}
+					{% if entry.project != project %}
+				    <option value="{{ entry.project_id }}" >{{ entry.project }}</option>
+				    {% endif %}
+				{% endfor %}
+			</select>
+		</div>
+
+
+	<div class="table-grid">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Level</th>
+                    <th scope="col">Designation</th>
+                    <th scope="col">Department</th>
+                  </tr>
+                  {% for entrys in empl %}
+                  <tr onclick="document.location='/progazer/viewtimesheets/{{project_id}}/{{entrys.employee_id}}/';" >
+                    <td>{{entrys.employee.id}}</td>
+                    <td>{{entrys.employee.firstname}} {{entrys.employee.lastname}}</a></td>
+                    <td>{{entrys.employee.level}}</td>
+                    <td>{{entrys.employee.designation}}</td>
+                    <td>{{entrys.employee.department}}</td>
+                    
+                  	</tr>
+                  {% endfor %} 
+                  
+                 </table>
+	</div>
+
+
+
+</div>
+</body>
+{% endblock %}
+
+
